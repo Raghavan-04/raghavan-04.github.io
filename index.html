@@ -1,10 +1,28 @@
-<button id="theme-toggle">Switch Theme</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raghavan | Developer Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Raghavan's Portfolio</h1>
+        <button id="theme-toggle">🌙 Switch Mode</button>
+    </header>
 
-<script>
-  const btn = document.getElementById('theme-toggle');
-  btn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    btn.innerText = isDark ? "Switch to Light Mode" : "Switch to Dark Mode";
-  });
-</script>
+    <section id="github-stats">
+        <h2>Live GitHub Stats</h2>
+        <div id="stats-container">Loading data...</div>
+    </section>
+
+    <section id="projects">
+        <h2>My Repositories</h2>
+        <ul id="repo-list">
+            </ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
