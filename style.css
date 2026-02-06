@@ -1,0 +1,24 @@
+:root {
+    --bg: #ffffff;
+    --text: #333;
+}
+
+.dark-theme {
+    --bg: #1a1a1a;
+    --text: #f4f4f4;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    transition: 0.3s;
+    padding: 2rem;
+}
+
+#repo-list li {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    list-style: none;
+}
