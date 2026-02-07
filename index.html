@@ -3,28 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raghavan | Developer Portfolio</title>
+    <title>Raghavan | Full Stack Developer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="light-theme">
-    <div class="container">
-        <header>
-            <h1>Raghavan's Portfolio</h1>
-            <button id="theme-toggle">🌙 Switch Mode</button>
-        </header>
+<body>
 
-        <section id="github-stats" class="card">
-            <h2>Live GitHub Stats</h2>
-            <div id="stats-container">Fetching your profile...</div>
+    <nav>
+        <div class="nav-content">
+            <span class="logo">R04.</span>
+            <div class="nav-links">
+                <a href="#projects">Work</a>
+                <a href="#skills">Skills</a>
+                <button id="theme-toggle"><i data-lucide="moon"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <div class="badge">Available for projects</div>
+            <h1>Building <span class="gradient-text">scalable</span> digital experiences.</h1>
+            <p>Hi, I'm Raghavan. A Full-Stack Developer focused on clean code and interactive design.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn-primary">View Projects</a>
+                <a href="https://github.com/Raghavan-04" class="btn-secondary">GitHub</a>
+            </div>
+        </section>
+
+        <section id="skills" class="skills-section">
+            <div class="card stats-card">
+                <div id="github-data">
+                    <p>Fetching real-time GitHub activity...</p>
+                </div>
+            </div>
         </section>
 
         <section id="projects">
-            <h2>My Repositories</h2>
-            <div id="repo-list" class="grid">
+            <h2 class="section-title">Featured Work</h2>
+            <div id="repo-grid" class="project-grid">
                 </div>
         </section>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Raghavan. Built with JavaScript & GitHub APIs.</p>
+    </footer>
 
     <script src="script.js"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
