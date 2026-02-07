@@ -1,39 +1,43 @@
-// Toggle Dark Mode
-const themeBtn = document.getElementById('theme-toggle');
-themeBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    const icon = themeBtn.querySelector('i');
-    const isDark = document.body.classList.contains('dark-theme');
-    icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-    lucide.createIcons();
+// Form submission handling
+document.querySelector('.contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you for your message! I will get back to you soon.');
+    this.reset();
 });
 
-// Fetch Repos with Modern Layout
-async function getRepos() {
-    const grid = document.getElementById('repo-grid');
-    const stats = document.getElementById('github-data');
-    
-    try {
-        const res = await fetch('https://api.github.com/users/Raghavan-04/repos?sort=updated');
-        const data = await res.json();
-        
-        stats.innerHTML = `<h3>Activity</h3><p>I currently have <strong>${data.length}</strong> public repositories. Here are my latest projects:</p>`;
-        
-        grid.innerHTML = data.slice(0, 6).map(repo => `
-            <div class="card">
-                <h3 style="margin-bottom: 0.5rem">${repo.name}</h3>
-                <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1rem">
-                    ${repo.description || 'No description provided for this repository.'}
-                </p>
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                    <span style="font-size: 0.8rem; font-weight: 600">⭐ ${repo.stargazers_count}</span>
-                    <a href="${repo.html_url}" target="_blank" class="btn-secondary" style="margin: 0">View Repo →</a>
-                </div>
-            </div>
-        `).join('');
-    } catch (e) {
-        stats.innerText = "Error loading live data.";
-    }
-}
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
 
-getRepos();
+// Intersection Observer for fade-in animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe project cards for scrolling animations
+document.querySelectorAll('.project-card, .blog-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+});
