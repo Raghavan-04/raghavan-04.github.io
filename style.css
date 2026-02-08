@@ -238,12 +238,19 @@ section {
     margin-top: 4rem;
 }
 
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .project-card {
     background: white;
     border: 1px solid var(--border);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    height: 100%;
 }
 
 .project-card:hover {
