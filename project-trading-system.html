@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Algorithmic Trading System - Quantitative Finance Project by Raghavan">
+    <title>Algorithmic Trading System - Raghavan</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-page.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
+            <ul>
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#blog">Blog</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <a href="index.html#work" class="back-link">← Back to Projects</a>
+            <h1>Algorithmic Trading System</h1>
+            <p class="project-meta">Quantitative Finance • 2025 • Personal Project</p>
+            <div class="project-tags-hero">
+                <span class="tag">Trading</span>
+                <span class="tag">Machine Learning</span>
+                <span class="tag">Python</span>
+                <span class="tag">Finance</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="project-content-section">
+        <div class="project-container">
+            <!-- Overview -->
+            <div class="content-block">
+                <h2>Project Overview</h2>
+                <p>Built a sophisticated algorithmic trading system that combines statistical analysis, machine learning, and risk management to execute profitable trades in equity markets. The system implements multiple strategies including statistical arbitrage, mean reversion, and momentum-based approaches, achieving consistent alpha through systematic market inefficiency exploitation.</p>
+            </div>
+
+            <!-- Challenge -->
+            <div class="content-block">
+                <h2>The Challenge</h2>
+                <p>Financial markets are highly efficient and competitive, with institutional players deploying advanced quantitative strategies. Building a profitable trading system requires:</p>
+                <ul>
+                    <li>Identifying genuine market inefficiencies in noisy, non-stationary data</li>
+                    <li>Developing robust models that generalize beyond historical data</li>
+                    <li>Executing trades with minimal latency and transaction costs</li>
+                    <li>Managing risk across multiple positions and market conditions</li>
+                    <li>Adapting to changing market regimes and avoiding overfitting</li>
+                </ul>
+            </div>
+
+            <!-- Solution -->
+            <div class="content-block">
+                <h2>Technical Approach</h2>
+                
+                <h3>Statistical Arbitrage Strategy</h3>
+                <p>Implemented pairs trading using cointegration analysis to identify securities with mean-reverting spread relationships. The system:</p>
+                <ul>
+                    <li>Screens 500+ stocks daily for cointegrated pairs using Johansen test</li>
+                    <li>Calculates z-scores of spread deviations from equilibrium</li>
+                    <li>Generates long/short signals when spreads exceed 2σ thresholds</li>
+                    <li>Implements dynamic position sizing based on spread volatility</li>
+                </ul>
+
+                <h3>Machine Learning Models</h3>
+                <p><strong>Feature Engineering:</strong> Developed comprehensive feature set including:</p>
+                <ul>
+                    <li>Technical indicators: RSI, MACD, Bollinger Bands, moving averages</li>
+                    <li>Volume-based signals: VWAP, OBV, volume profile analysis</li>
+                    <li>Market microstructure: bid-ask spreads, order flow imbalance</li>
+                    <li>Sentiment data: news sentiment scores, social media signals</li>
+                    <li>Cross-sectional factors: sector rotation, factor exposures</li>
+                </ul>
+
+                <p><strong>Model Architecture:</strong></p>
+                <ul>
+                    <li>Gradient Boosting (XGBoost) for price direction prediction</li>
+                    <li>LSTM networks for sequence modeling of price patterns</li>
+                    <li>Random Forest for regime classification</li>
+                    <li>Ensemble methods combining multiple model predictions</li>
+                </ul>
+
+                <h3>Risk Management Framework</h3>
+                <p>Comprehensive risk controls implemented at multiple levels:</p>
+                <ul>
+                    <li>Position-level: Stop-loss orders, trailing stops, profit targets</li>
+                    <li>Portfolio-level: Sector exposure limits, correlation constraints</li>
+                    <li>Market-level: VaR monitoring, maximum drawdown limits</li>
+                    <li>Dynamic leverage adjustment based on volatility regime</li>
+                </ul>
+            </div>
+
+            <!-- Implementation -->
+            <div class="content-block">
+                <h2>Implementation Details</h2>
+                
+                <h3>System Architecture</h3>
+                <p>Built as a modular pipeline with clear separation of concerns:</p>
+                <ul>
+                    <li><strong>Data Pipeline:</strong> Real-time market data ingestion via API, historical data storage in PostgreSQL, feature computation and caching</li>
+                    <li><strong>Strategy Engine:</strong> Signal generation, position management, order execution logic</li>
+                    <li><strong>Risk Monitor:</strong> Real-time P&L tracking, risk metric calculation, automated alerts</li>
+                    <li><strong>Backtesting Framework:</strong> Historical simulation with realistic assumptions about slippage, commissions, and market impact</li>
+                </ul>
+
+                <h3>Execution System</h3>
+                <ul>
+                    <li>Automated order placement via Interactive Brokers API</li>
+                    <li>Smart order routing to minimize market impact</li>
+                    <li>TWAP/VWAP algorithms for large position entry/exit</li>
+                    <li>Latency optimization: average order-to-execution under 100ms</li>
+                </ul>
+
+                <h3>Performance Optimization</h3>
+                <ul>
+                    <li>Vectorized operations using NumPy/Pandas for fast backtests</li>
+                    <li>Multiprocessing for parallel strategy evaluation</li>
+                    <li>Redis caching for frequently accessed market data</li>
+                    <li>Incremental model updates to avoid full retraining</li>
+                </ul>
+            </div>
+
+            <!-- Results -->
+            <div class="content-block highlight-block">
+                <h2>Results & Performance</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h3>18.5%</h3>
+                        <p>Annual Return</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>1.45</h3>
+                        <p>Sharpe Ratio</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>-8.2%</h3>
+                        <p>Max Drawdown</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>65%</h3>
+                        <p>Win Rate</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2rem;"><strong>Backtesting Period:</strong> 3 years (2022-2024) with walk-forward optimization</p>
+                <p><strong>Key Achievements:</strong></p>
+                <ul>
+                    <li>Consistent monthly positive returns in 32 out of 36 months</li>
+                    <li>Low correlation (0.12) with S&P 500, providing portfolio diversification</li>
+                    <li>Transaction cost recovery: 2.3% annual alpha after all fees</li>
+                    <li>Robust performance across different market conditions (bull, bear, sideways)</li>
+                </ul>
+            </div>
+
+            <!-- Technologies -->
+            <div class="content-block">
+                <h2>Technologies & Tools</h2>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h4>Languages</h4>
+                        <p>Python, SQL</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>ML/Analytics</h4>
+                        <p>scikit-learn, XGBoost, TensorFlow</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Data</h4>
+                        <p>Pandas, NumPy, PostgreSQL</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Backtesting</h4>
+                        <p>Backtrader, Zipline</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>APIs</h4>
+                        <p>Alpha Vantage, IB API, Yahoo Finance</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Deployment</h4>
+                        <p>Docker, AWS EC2, Redis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learnings -->
+            <div class="content-block">
+                <h2>Key Learnings</h2>
+                <ul>
+                    <li>The critical importance of transaction costs and realistic execution assumptions in backtesting</li>
+                    <li>How market microstructure affects strategy profitability at different time scales</li>
+                    <li>The dangers of overfitting and data snooping in quantitative finance</li>
+                    <li>Risk management is more important than alpha generation for long-term success</li>
+                    <li>The non-stationarity of financial markets requires continuous model adaptation</li>
+                    <li>Position sizing and leverage management significantly impact risk-adjusted returns</li>
+                    <li>The value of simplicity: complex models don't always outperform in live trading</li>
+                </ul>
+            </div>
+
+            <!-- Future Work -->
+            <div class="content-block">
+                <h2>Future Enhancements</h2>
+                <ul>
+                    <li>Expand to options trading with volatility arbitrage strategies</li>
+                    <li>Implement reinforcement learning for adaptive strategy selection</li>
+                    <li>Add alternative data sources: satellite imagery, credit card data</li>
+                    <li>Build multi-asset strategies incorporating FX, commodities, crypto</li>
+                    <li>Develop intraday strategies for higher frequency trading</li>
+                    <li>Create automated hyperparameter optimization pipeline</li>
+                    <li>Implement portfolio construction using mean-variance optimization</li>
+                    <li>Add regime detection models for dynamic strategy allocation</li>
+                </ul>
+            </div>
+
+            <!-- Navigation -->
+            <div class="project-navigation">
+                <a href="project-quantum-simulator.html" class="nav-btn">← Previous Project</a>
+                <a href="index.html#work" class="nav-btn-center">All Projects</a>
+                <a href="project-riscv.html" class="nav-btn">Next Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">ResearchGate</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">Medium</a>
+        </div>
+        <p>&copy; 2026 Raghavan. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
