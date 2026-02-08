@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quantum Circuit Simulator - Quantum Computing Project by Raghavan">
+    <title>Quantum Circuit Simulator - Raghavan</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-page.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
+            <ul>
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#blog">Blog</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <a href="index.html#work" class="back-link">← Back to Projects</a>
+            <h1>Quantum Circuit Simulator</h1>
+            <p class="project-meta">Quantum Computing • Fall 2025 • Research Project</p>
+            <div class="project-tags-hero">
+                <span class="tag">Quantum</span>
+                <span class="tag">Python</span>
+                <span class="tag">Qiskit</span>
+                <span class="tag">Algorithms</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="project-content-section">
+        <div class="project-container">
+            <!-- Overview -->
+            <div class="content-block">
+                <h2>Project Overview</h2>
+                <p>Developed a comprehensive Python-based quantum circuit simulator from scratch, implementing fundamental quantum gates, state vector manipulation, and visualization tools. The simulator supports famous quantum algorithms including Grover's search and Shor's factorization, providing both educational value and practical testing capabilities for quantum algorithm development.</p>
+            </div>
+
+            <!-- Challenge -->
+            <div class="content-block">
+                <h2>The Challenge</h2>
+                <p>Understanding quantum computing requires hands-on experience with quantum circuits, but access to real quantum hardware is limited and expensive. Existing simulators often abstract away crucial implementation details, making it difficult to truly understand quantum mechanics at the gate level. The goal was to build a simulator that:</p>
+                <ul>
+                    <li>Accurately represents quantum state evolution through unitary transformations</li>
+                    <li>Handles multi-qubit entanglement and measurement operations</li>
+                    <li>Provides clear visualization of quantum states and circuit operations</li>
+                    <li>Scales efficiently for circuits with up to 15 qubits</li>
+                </ul>
+            </div>
+
+            <!-- Solution -->
+            <div class="content-block">
+                <h2>Technical Approach</h2>
+                
+                <h3>Quantum State Representation</h3>
+                <p>The simulator represents quantum states as complex-valued vectors in the computational basis. For an n-qubit system, the state vector contains 2^n complex amplitudes, stored as NumPy arrays for efficient linear algebra operations.</p>
+                
+                <h3>Gate Implementation</h3>
+                <p>Implemented all fundamental quantum gates as unitary matrices:</p>
+                <ul>
+                    <li><strong>Single-qubit gates:</strong> Pauli X/Y/Z, Hadamard, Phase (S, T), Rotation gates (Rx, Ry, Rz)</li>
+                    <li><strong>Two-qubit gates:</strong> CNOT, SWAP, Controlled-Z, Controlled-Phase</li>
+                    <li><strong>Multi-qubit gates:</strong> Toffoli (CCX), Controlled-SWAP (Fredkin)</li>
+                    <li><strong>Custom gates:</strong> Support for arbitrary unitary matrices</li>
+                </ul>
+
+                <h3>Quantum Algorithms</h3>
+                <p><strong>Grover's Algorithm:</strong> Implemented the complete quantum search algorithm with Oracle construction for arbitrary search problems. Verified quadratic speedup with circuits searching databases up to 2^10 elements.</p>
+                
+                <p><strong>Shor's Algorithm:</strong> Built modular exponentiation circuits and Quantum Fourier Transform for integer factorization. Successfully factored integers up to 21 using period-finding subroutine.</p>
+
+                <p><strong>Additional Algorithms:</strong></p>
+                <ul>
+                    <li>Deutsch-Jozsa algorithm for function property testing</li>
+                    <li>Quantum teleportation protocol with Bell state preparation</li>
+                    <li>Bernstein-Vazirani algorithm for hidden string finding</li>
+                    <li>Quantum Phase Estimation (QPE) for eigenvalue computation</li>
+                </ul>
+            </div>
+
+            <!-- Implementation -->
+            <div class="content-block">
+                <h2>Implementation Details</h2>
+                
+                <h3>Architecture</h3>
+                <p>The simulator is organized into modular components:</p>
+                <ul>
+                    <li><strong>QuantumRegister:</strong> Manages qubit initialization and state vector</li>
+                    <li><strong>QuantumCircuit:</strong> Builds and executes quantum circuits</li>
+                    <li><strong>GateLibrary:</strong> Collection of all quantum gates and operations</li>
+                    <li><strong>Measurement:</strong> Implements quantum measurement in computational basis</li>
+                    <li><strong>Visualization:</strong> Renders circuits and probability distributions</li>
+                </ul>
+
+                <h3>Optimization Strategies</h3>
+                <ul>
+                    <li>Lazy evaluation of gate sequences to reduce intermediate computations</li>
+                    <li>Sparse matrix representations for large-scale quantum states</li>
+                    <li>Parallel processing for independent qubit operations</li>
+                    <li>Memoization of frequently used gate matrices</li>
+                </ul>
+
+                <h3>Visualization Features</h3>
+                <ul>
+                    <li>Interactive circuit diagrams using Matplotlib</li>
+                    <li>Bloch sphere visualization for single-qubit states</li>
+                    <li>Probability distribution histograms for measurement outcomes</li>
+                    <li>State vector amplitude and phase representation</li>
+                    <li>Animation of quantum state evolution through circuits</li>
+                </ul>
+            </div>
+
+            <!-- Results -->
+            <div class="content-block highlight-block">
+                <h2>Results & Impact</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h3>15 Qubits</h3>
+                        <p>Max Simulation</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>25+</h3>
+                        <p>Quantum Gates</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>5</h3>
+                        <p>Algorithms</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>100%</h3>
+                        <p>Accuracy</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2rem;">The simulator has been used in educational settings to teach quantum computing fundamentals and has been validated against IBM Qiskit for accuracy. All implemented algorithms produce correct results matching theoretical predictions, with execution times suitable for interactive exploration and algorithm development.</p>
+            </div>
+
+            <!-- Technologies -->
+            <div class="content-block">
+                <h2>Technologies & Tools</h2>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h4>Language</h4>
+                        <p>Python 3.10+</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Computation</h4>
+                        <p>NumPy, SciPy</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Visualization</h4>
+                        <p>Matplotlib, Seaborn</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Validation</h4>
+                        <p>Qiskit, Cirq</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Testing</h4>
+                        <p>Pytest, unittest</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Documentation</h4>
+                        <p>Sphinx, Jupyter</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learnings -->
+            <div class="content-block">
+                <h2>Key Learnings</h2>
+                <ul>
+                    <li>Deep understanding of quantum mechanics principles: superposition, entanglement, and measurement</li>
+                    <li>Tensor product operations and Kronecker products for multi-qubit systems</li>
+                    <li>The critical importance of numerical precision in quantum simulations</li>
+                    <li>How quantum algorithm complexity differs fundamentally from classical algorithms</li>
+                    <li>The exponential resource requirements for simulating quantum systems classically</li>
+                    <li>Practical limitations of NISQ (Noisy Intermediate-Scale Quantum) devices</li>
+                </ul>
+            </div>
+
+            <!-- Future Work -->
+            <div class="content-block">
+                <h2>Future Enhancements</h2>
+                <ul>
+                    <li>Add noise models to simulate realistic quantum hardware behavior</li>
+                    <li>Implement tensor network methods for efficient large-scale simulation</li>
+                    <li>Add support for parameterized quantum circuits (PQC) for variational algorithms</li>
+                    <li>Create web-based interface for interactive circuit design</li>
+                    <li>Integrate with real quantum hardware backends (IBM Quantum, AWS Braket)</li>
+                    <li>Add quantum error correction code implementations</li>
+                    <li>Develop optimization techniques for circuit depth reduction</li>
+                </ul>
+            </div>
+
+            <!-- Navigation -->
+            <div class="project-navigation">
+                <a href="project-trading-system.html" class="nav-btn">← Previous Project</a>
+                <a href="index.html#work" class="nav-btn-center">All Projects</a>
+                <a href="project-riscv.html" class="nav-btn">Next Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">ResearchGate</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">Medium</a>
+        </div>
+        <p>&copy; 2026 Raghavan. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
