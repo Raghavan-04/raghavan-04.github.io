@@ -3,220 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Low-Power RISC-V Processor - VLSI Design Project by Raghavan">
-    <title>Low-Power RISC-V Processor - Raghavan</title>
+    <meta name="description" content="Custom RISC-V Audio SoC - RTL Design & Verification by Raghavan">
+    <title>Audio RISC-V SoC - Raghavan</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="project-page.css">
-    
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBGDVXSWX7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-JBGDVXSWX7');
-    </script>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="container">
             <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
             <ul>
                 <li><a href="index.html#work">Work</a></li>
                 <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#blog">Blog</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Project Hero -->
     <section class="project-hero">
         <div class="project-hero-content">
             <a href="index.html#work" class="back-link">← Back to Projects</a>
-            <h1>Low-Power RISC-V Processor</h1>
-            <p class="project-meta">VLSI Design • Spring 2025 • Individual Project</p>
+            <h1>Custom SoC Audio RISC-V </h1>
+            <p class="project-meta">RTL Design • SoC Architecture • Firmware Engineering • 2026</p>
             <div class="project-tags-hero">
-                <span class="tag">VLSI</span>
-                <span class="tag">Verilog</span>
-                <span class="tag">RTL Design</span>
-                <span class="tag">Low Power</span>
+                <span class="tag">SystemVerilog</span>
+                <span class="tag">RISC-V ISA</span>
+                <span class="tag">Verilator</span>
+                <span class="tag">Bare-Metal ASM</span>
             </div>
         </div>
     </section>
 
-    <!-- Project Content -->
     <section class="project-content-section">
         <div class="project-container">
-            <!-- Overview -->
             <div class="content-block">
                 <h2>Project Overview</h2>
-                <p>Designed and verified a complete 5-stage pipelined RISC-V processor optimized for power efficiency, targeting embedded applications where battery life is critical. The project involved implementing advanced power-saving techniques including clock gating, dynamic voltage scaling, and intelligent sleep modes.</p>
+                <p>Designed and verified a custom <strong>System-on-Chip (SoC)</strong> based on the RISC-V architecture, specifically optimized for high-fidelity audio processing. By utilizing a single-cycle datapath, the system ensures <strong>cycle-perfect determinism</strong>, eliminating the sample jitter commonly found in more complex pipelined processors.</p>
             </div>
 
-            <!-- Challenge -->
             <div class="content-block">
                 <h2>The Challenge</h2>
-                <p>Modern embedded systems demand increasingly powerful processors while maintaining strict power budgets. Traditional processor designs consume excessive power during idle periods and lack fine-grained control over individual functional units. The challenge was to create a processor that delivers competitive performance while reducing power consumption by at least 40% compared to baseline implementations.</p>
+                <p>Standard OS-based audio processing suffers from non-deterministic latency caused by interrupts and context switching. To achieve high-fidelity output, the hardware must guarantee that audio samples are delivered to the PWM engine at precise intervals. My goal was to build a "Silicon-Up" solution where the hardware timer forces the CPU to prioritize audio updates via low-level hardware interrupts.</p>
             </div>
 
-            <!-- Solution -->
             <div class="content-block">
                 <h2>Technical Approach</h2>
                 
-                <h3>Architecture Design</h3>
-                <p>Implemented a classic 5-stage pipeline (Fetch, Decode, Execute, Memory, Write-back) with RISC-V RV32I instruction set support. The architecture includes:</p>
+                <h3>CPU Core & Interrupt Logic</h3>
+                <p>Implemented an <strong>RV32I Core</strong> in SystemVerilog. Key features include:</p>
                 <ul>
-                    <li>Hazard detection and forwarding unit for data dependencies</li>
-                    <li>Branch prediction with 2-bit saturating counter</li>
-                    <li>Separate instruction and data memory interfaces</li>
-                    <li>32 general-purpose registers with zero register hardwired</li>
+                    <li><strong>Hardware Vector Table:</strong> CPU immediately jumps to <code>0x20</code> upon timer IRQ.</li>
+                    <li><strong>Context Saving:</strong> Integrated a Machine Exception Program Counter (MEPC) to resume background tasks seamlessly after audio interrupts.</li>
+                    <li><strong>Deterministic Execution:</strong> Single-cycle ALU ensures predictable instruction latency.</li>
                 </ul>
 
-                <h3>Power Optimization Techniques</h3>
-                <p><strong>Clock Gating:</strong> Implemented fine-grained clock gating at the register and functional unit level. Unused pipeline stages and ALU components are automatically clock-gated based on instruction type, reducing dynamic power by 35%.</p>
+                <h3>Audio Peripheral Design</h3>
+                <p><strong>Audio PWM Engine:</strong> A custom 8-bit digital-to-analog pulse-width modulator that transforms PCM data into speaker-ready signals. It includes hardware-level saturation logic to prevent digital clipping distortion during high-volume transients.</p>
                 
-                <p><strong>Dynamic Voltage and Frequency Scaling (DVFS):</strong> Integrated voltage and frequency control logic that adjusts operating points based on workload demands. The processor can switch between three power modes:</p>
-                <ul>
-                    <li>High Performance: 1.2V @ 500MHz</li>
-                    <li>Balanced: 1.0V @ 300MHz</li>
-                    <li>Low Power: 0.8V @ 100MHz</li>
-                </ul>
-
-                <p><strong>Power Gating:</strong> Entire functional blocks (multiplier, divider) can be power-gated when not in use, eliminating leakage current in idle components.</p>
+                <p><strong>Programmable Timer:</strong> Acts as the system's "Heartbeat," mapped to MMIO address <code>0x500</code>, allowing software to dynamically adjust the sample rate.</p>
             </div>
 
-            <!-- Implementation -->
             <div class="content-block">
-                <h2>Implementation Details</h2>
-                
-                <h3>RTL Design</h3>
-                <p>Developed over 8,000 lines of SystemVerilog code with strict coding guidelines for synthesis. Used parameterized modules for scalability and implemented comprehensive assertion-based verification.</p>
-                
-                <h3>Verification Strategy</h3>
-                <ul>
-                    <li>Created extensive testbench with over 500 directed and random test cases</li>
-                    <li>Achieved 98% code coverage and 100% functional coverage for RV32I instructions</li>
-                    <li>Used industry-standard RISC-V compliance tests</li>
-                    <li>Performed gate-level simulation post-synthesis to verify timing</li>
-                </ul>
-
-                <h3>Synthesis and Physical Design</h3>
-                <p>Synthesized using Synopsys Design Compiler targeting 28nm CMOS technology. Floor planning and place-and-route performed in Cadence Innovus. Final design achieved:</p>
-                <ul>
-                    <li>Core area: 0.85 mm²</li>
-                    <li>Maximum frequency: 550 MHz @ 1.2V</li>
-                    <li>Power consumption: 42 mW @ 300MHz (typical workload)</li>
-                </ul>
+                <h2>The macOS Toolchain Mastery</h2>
+                <p>Built a professional verification environment on macOS using <strong>Verilator</strong> to transpile RTL into high-speed C++ models. Managed complex environment headers (SDKROOT) and automated the build flow with a custom Makefile system to generate VCD (Value Change Dump) files for nanosecond-level waveform debugging in <strong>GTKWave</strong>.</p>
             </div>
 
-            <!-- Results -->
             <div class="content-block highlight-block">
-                <h2>Results & Impact</h2>
+                <h2>Key Results</h2>
                 <div class="results-grid">
                     <div class="result-item">
-                        <h3>45%</h3>
-                        <p>Power Reduction</p>
+                        <h3>Zero</h3>
+                        <p>Sample Jitter</p>
                     </div>
                     <div class="result-item">
-                        <h3>550MHz</h3>
-                        <p>Max Frequency</p>
+                        <h3>100%</h3>
+                        <p>ISA Compliance</p>
                     </div>
                     <div class="result-item">
-                        <h3>0.85mm²</h3>
-                        <p>Core Area</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>98%</h3>
-                        <p>Code Coverage</p>
-                    </div>
-                </div>
-                <p style="margin-top: 2rem;">The processor achieved 45% power reduction compared to baseline implementations while maintaining competitive performance. The design successfully meets all timing constraints and has been validated through extensive simulation and formal verification.</p>
-            </div>
-
-            <!-- Technologies -->
-            <div class="content-block">
-                <h2>Technologies & Tools</h2>
-                <div class="tech-grid">
-                    <div class="tech-item">
-                        <h4>HDL</h4>
-                        <p>SystemVerilog, Verilog</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Simulation</h4>
-                        <p>ModelSim, VCS</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Synthesis</h4>
-                        <p>Synopsys Design Compiler</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>P&R</h4>
-                        <p>Cadence Innovus</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Verification</h4>
-                        <p>UVM, SystemVerilog Assertions</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Analysis</h4>
-                        <p>PrimeTime, Power Compiler</p>
+                        <h3>1-Cycle</h3>
+                        <p>IRQ Latency</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Learnings -->
             <div class="content-block">
-                <h2>Key Learnings</h2>
+                <h2>Future Work</h2>
                 <ul>
-                    <li>Deep understanding of RISC-V ISA and microarchitecture design principles</li>
-                    <li>Practical experience with low-power design techniques and their trade-offs</li>
-                    <li>Importance of early power planning in the design flow</li>
-                    <li>Clock domain crossing challenges in DVFS implementations</li>
-                    <li>Verification complexity increases exponentially with power management features</li>
+                    <li><strong>DSP Accelerators:</strong> Adding hardware-accelerated FFT/FIR filter blocks.</li>
+                    <li><strong>Physical Hardening:</strong> Implementing the OpenLane flow for Sky130 Tape-out.</li>
+                    <li><strong>Multi-Channel Audio:</strong> Expanding to I2S protocols for 7.1 surround support.</li>
                 </ul>
             </div>
 
-            <!-- Future Work -->
-            <div class="content-block">
-                <h2>Future Enhancements</h2>
-                <ul>
-                    <li>Add support for M extension (multiplication/division) with dedicated hardware</li>
-                    <li>Implement adaptive body biasing for further leakage reduction</li>
-                    <li>Explore near-threshold computing for ultra-low-power operation</li>
-                    <li>Add L1 cache hierarchy with power-aware replacement policies</li>
-                    <li>Integrate with complete SoC design including peripherals</li>
-                </ul>
-            </div>
-
-            <!-- Navigation -->
             <div class="project-navigation">
-                <a href="project-quantum-simulator.html" class="nav-btn">← Previous Project</a>
-                <a href="index.html#work" class="nav-btn-center">All Projects</a>
-                <a href="project-trading-system.html" class="nav-btn">Next Project →</a>
+                <a href="index.html#work" class="nav-btn-center">View Technical Docs on GitHub</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <div class="social-links">
-            <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">ResearchGate</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">Medium</a>
-        </div>
-        <p>&copy; 2026 Raghavan. All rights reserved.</p>
+        <p>&copy; 2026 Raghavan. Built with SystemVerilog & Silicon Intent.</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
