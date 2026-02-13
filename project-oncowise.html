@@ -42,6 +42,7 @@
 
     <section class="project-content-section">
         <div class="project-container">
+            
             <div class="content-block">
                 <h2>Project Overview</h2>
                 <p><strong>Oncowise AI</strong> is a multi-task healthcare assistant designed to provide intelligent decision support for cancer treatment. By fine-tuning large language models on medical literature (PubMed), the system translates complex clinical data into accessible insights for both medical professionals and patients.</p>
@@ -75,61 +76,55 @@
                 <h2>Technical Architecture</h2>
                 <p>The system employs a sophisticated cascaded pipeline combining three distinct fine-tuned models:</p>
                 <ul>
-                    <li><strong>Classification Module (BioBERT):</strong> Categorizes user queries (e.g., Symptoms, Diagnosis, Treatment) to route requests effectively. Achieved 80% accuracy.</li>
-                    <li><strong>QA Module (BioBERT-QA):</strong> An extractive model trained on the MedQuAD dataset to pull precise answer spans directly from PubMed-validated context.</li>
-                    <li><strong>Refinement Module (GPT-2):</strong> Acts as a linguistic polisher, rephrasing technical extracted data into patient-friendly, natural language conversations.</li>
+                    <li><strong>Classification Module (BioBERT):</strong> Categorizes user queries to route requests effectively. Achieved 80% accuracy.</li>
+                    <li><strong>QA Module (BioBERT-QA):</strong> An extractive model trained on MedQuAD to pull precise answer spans from PubMed.</li>
+                    <li><strong>Refinement Module (GPT-2):</strong> Rephrases technical data into patient-friendly, natural language.</li>
                 </ul>
 
                 <h3>Infrastructure & Deployment</h3>
-                <p>The backend is powered by a <strong>Flask API</strong> that handles the model inference logic from the cloud processing AWS, while the frontend is a modern <strong>Swift-based mobile application</strong> (OncoChats) integrated with Firebase for secure user authentication.</p>
+                <p>The backend is powered by a <strong>Flask API</strong> that handles the model inference logic via <strong>AWS Cloud Processing/Google Colab</strong>, while the frontend is a modern <strong>SwiftUI mobile application</strong> integrated with Firebase for secure authentication.</p>
             </div>
 
-            
-
-           
-        <div class="content-block highlight-block">
-            <h2>Model Performance Metrics</h2>
-            <div class="results-grid">
-                
-                <div class="result-item">
-                    <div class="metric-header">
-                        <h3>80%</h3>
-                        <span class="info-icon" title="Measures how accurately the BioBERT model routes queries to categories like Symptoms or Treatment.">ⓘ</span>
+            <div class="content-block highlight-block">
+                <h2>Model Performance Metrics</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="metric-header">
+                            <h3>80%</h3>
+                            <span class="info-icon" title="Measures query routing accuracy.">ⓘ</span>
+                        </div>
+                        <p>Classification Accuracy</p>
                     </div>
-                    <p>Classification Accuracy</p>
-                </div>
 
-                <div class="result-item">
-                    <div class="metric-header">
-                        <h3>63%</h3>
-                        <span class="info-icon" title="The percentage of answers that match the medical ground-truth word-for-word.">ⓘ</span>
+                    <div class="result-item">
+                        <div class="metric-header">
+                            <h3>63%</h3>
+                            <span class="info-icon" title="Percentage of exact word-for-word matches.">ⓘ</span>
+                        </div>
+                        <p>QA Exact Match (EM)</p>
                     </div>
-                    <p>QA Exact Match (EM)</p>
-                </div>
 
-                <div class="result-item">
-                    <div class="metric-header">
-                        <h3>68%</h3>
-                        <span class="info-icon" title="A metric for linguistic quality, comparing AI-generated responses to human clinical text.">ⓘ</span>
+                    <div class="result-item">
+                        <div class="metric-header">
+                            <h3>68%</h3>
+                            <span class="info-icon" title="Metric for linguistic quality and fluency.">ⓘ</span>
+                        </div>
+                        <p>BLEU Score (Linguistics)</p>
                     </div>
-                    <p>BLEU Score (Linguistics)</p>
                 </div>
-                 </div>
             </div>
-                
-            
 
             <div class="content-block">
                 <h2>Development Stack</h2>
-                <p>Built with a focus on stable updates and mitigate overfitting using <strong>AdamW</strong> optimization, L2 regularization, and Dropout (0.3). The project manages API security via environment variables to protect the OpenAI and backend endpoints.</p>
+                <p>Built with <strong>AdamW</strong> optimization, L2 regularization, and Dropout (0.3). The project manages API security via environment variables to protect OpenAI and backend endpoints.</p>
             </div>
 
             <div class="content-block">
                 <h2>Future Roadmap</h2>
                 <ul>
-                    <li><strong>Enhanced Dataset:</strong> Expanding training to include 10,000+ specialized clinical samples.</li>
-                    <li><strong>Contextual Memory:</strong> Implementing vector databases (Pinecone/Milvus) for long-term patient history tracking.</li>
-                    <li><strong>Edge Optimization:</strong> Quantizing models for local inference on mobile devices to improve privacy.</li>
+                    <li><strong>Enhanced Dataset:</strong> Expanding training to 10,000+ clinical samples.</li>
+                    <li><strong>Contextual Memory:</strong> Implementing <strong>Pinecone</strong> for patient history.</li>
+                    <li><strong>Edge Optimization:</strong> Local inference on mobile for improved privacy.</li>
                 </ul>
             </div>
 
