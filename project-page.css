@@ -1,77 +1,67 @@
-/* Container for the icon and tooltip */
+/* Container adjustment */
 .metric-header {
+    position: relative; /* Anchor for the tooltip */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
 }
 
-/* The ⓘ Icon Style */
+/* The Icon itself */
 .info-icon {
-    position: relative; /* Essential for positioning the tooltip */
     cursor: help;
-    color: #999;
-    font-size: 0.75rem;
-    border: 1px solid #ccc;
+    color: #b5a478; /* Matching your gold/tan theme color */
+    font-size: 0.8rem;
+    border: 1px solid #b5a478;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-.info-icon:hover {
-    color: #2c3e50;
-    border-color: #2c3e50;
-    background-color: #f0f4f8;
-}
-
-/* The Tooltip Bubble */
+/* THE TOOLTIP - Fixed the "Black Box" issue */
 .info-icon::after {
-    content: attr(data-tooltip); /* Pulls text from HTML attribute */
+    content: attr(data-tooltip);
     position: absolute;
-    bottom: 150%; /* Position above the icon */
+    bottom: 40px; /* Moves it above the number */
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    width: 200px;
-    padding: 10px;
-    background-color: #2c3e50; /* Elegant dark blue */
+    transform: translateX(-50%);
+    width: 180px;
+    padding: 8px 12px;
+    background-color: #1a1a1a; /* Clean charcoal black */
     color: #ffffff;
-    font-size: 0.8rem;
-    line-height: 1.4;
-    border-radius: 6px;
+    font-size: 0.75rem;
+    border-radius: 4px;
     text-align: center;
-    visibility: hidden;
+    
+    /* Strict Hidden State */
+    display: none; 
     opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 10;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    pointer-events: none;
+    pointer-events: none; 
+    z-index: 99;
 }
 
-/* The Little Triangle Arrow */
+/* THE ARROW */
 .info-icon::before {
     content: "";
     position: absolute;
-    bottom: 130%;
+    bottom: 34px;
     left: 50%;
     transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
-    border-color: #2c3e50 transparent transparent transparent;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease;
+    border: 6px solid transparent;
+    border-top-color: #1a1a1a;
+    display: none;
+    z-index: 99;
 }
 
-/* Show Tooltip on Hover */
+/* SHOW ONLY ON HOVER */
 .info-icon:hover::after,
 .info-icon:hover::before {
-    visibility: visible;
+    display: block;
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
 }
 
 .project-hero {
