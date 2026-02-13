@@ -81,26 +81,43 @@
                 </ul>
 
                 <h3>Infrastructure & Deployment</h3>
-                <p>The backend is powered by a <strong>Flask API</strong> that handles the model inference logic, while the frontend is a modern <strong>Swift-based mobile application</strong> (OncoChats) integrated with Firebase for secure user authentication.</p>
+                <p>The backend is powered by a <strong>Flask API</strong> that handles the model inference logic from the cloud processing AWS, while the frontend is a modern <strong>Swift-based mobile application</strong> (OncoChats) integrated with Firebase for secure user authentication.</p>
             </div>
 
-            <div class="content-block highlight-block">
-                <h2>Performance Metrics</h2>
-                <div class="results-grid">
-                    <div class="result-item">
+            
+
+           
+        <div class="content-block highlight-block">
+            <h2>Model Performance Metrics</h2>
+            <div class="results-grid">
+                
+                <div class="result-item">
+                    <div class="metric-header">
                         <h3>80%</h3>
-                        <p>Classification Accuracy</p>
+                        <span class="info-icon" title="Measures how accurately the BioBERT model routes queries to categories like Symptoms or Treatment.">ⓘ</span>
                     </div>
-                    <div class="result-item">
-                        <h3>63%</h3>
-                        <p>QA Exact Match (EM)</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>68%</h3>
-                        <p>BLEU Score (Linguistics)</p>
-                    </div>
+                    <p>Classification Accuracy</p>
                 </div>
+
+                <div class="result-item">
+                    <div class="metric-header">
+                        <h3>63%</h3>
+                        <span class="info-icon" title="The percentage of answers that match the medical ground-truth word-for-word.">ⓘ</span>
+                    </div>
+                    <p>QA Exact Match (EM)</p>
+                </div>
+
+                <div class="result-item">
+                    <div class="metric-header">
+                        <h3>68%</h3>
+                        <span class="info-icon" title="A metric for linguistic quality, comparing AI-generated responses to human clinical text.">ⓘ</span>
+                    </div>
+                    <p>BLEU Score (Linguistics)</p>
+                </div>
+                 </div>
             </div>
+                
+            
 
             <div class="content-block">
                 <h2>Development Stack</h2>
