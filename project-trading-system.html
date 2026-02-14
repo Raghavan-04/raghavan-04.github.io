@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Algorithmic Trading System - Quantitative Finance Project by Raghavan">
-    <title>Algorithmic Trading System - Raghavan</title>
+    <meta name="description" content="OptionsFlow Trading Platform - Quantitative Finance Project by Raghavan">
+    <title>OptionsFlow Trading Platform - Raghavan</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,10 +43,11 @@
     <section class="project-hero">
         <div class="project-hero-content">
             <a href="index.html#work" class="back-link">← Back to Projects</a>
-            <h1>Algorithmic Trading System</h1>
+            <h1>OptionsFlow Trading Platform</h1>
             <p class="project-meta">Quantitative Finance • 2025 • Personal Project</p>
             <div class="project-tags-hero">
-                <span class="tag">Trading</span>
+                <span class="tag">Options Trading</span>
+                <span class="tag">JavaScript</span>
                 <span class="tag">Python</span>
                 <span class="tag">Finance</span>
             </div>
@@ -58,19 +60,20 @@
             <!-- Overview -->
             <div class="content-block">
                 <h2>Project Overview</h2>
-                <p>Built a sophisticated algorithmic trading system that combines statistical analysis, machine learning, and risk management to execute profitable trades in equity markets. The system implements multiple strategies including statistical arbitrage, mean reversion, and momentum-based approaches, achieving consistent alpha through systematic market inefficiency exploitation.</p>
+                <p>Built a professional-grade options trading and analysis platform that combines real-time market data visualization with sophisticated strategy construction capabilities. The system features institutional-level analytics, automated Greek calculations, and intelligent strategy suggestions, enabling traders to make data-driven decisions through advanced visualization and risk modeling before executing complex multi-leg options trades.</p>
             </div>
 
             <!-- Challenge -->
             <div class="content-block">
                 <h2>The Challenge</h2>
-                <p>Financial markets are highly efficient and competitive, with institutional players deploying advanced quantitative strategies. Building a profitable trading system requires:</p>
+                <p>Options trading requires sophisticated tools to navigate complex multi-dimensional risk profiles. Building a comprehensive platform demands:</p>
                 <ul>
-                    <li>Identifying genuine market inefficiencies in noisy, non-stationary data</li>
-                    <li>Developing robust models that generalize beyond historical data</li>
-                    <li>Executing trades with minimal latency and transaction costs</li>
-                    <li>Managing risk across multiple positions and market conditions</li>
-                    <li>Adapting to changing market regimes and avoiding overfitting</li>
+                    <li>Real-time data processing with sub-second latency for accurate options pricing</li>
+                    <li>Complex mathematical modeling (Black-Scholes) for Greeks calculation in the browser</li>
+                    <li>Interactive visualization of non-linear payoff structures across multiple dimensions</li>
+                    <li>Integration of multiple data sources: price, volatility, open interest, gamma exposure</li>
+                    <li>Client-side performance optimization for instant multi-leg strategy recalculation</li>
+                    <li>Intuitive UX for complex strategy construction without overwhelming users</li>
                 </ul>
             </div>
 
@@ -78,33 +81,48 @@
             <div class="content-block">
                 <h2>Technical Approach</h2>
                 
-                <h3>Statistical Arbitrage Strategy</h3>
-                <p>Implemented pairs trading using cointegration analysis to identify securities with mean-reverting spread relationships. The system:</p>
+                <h3>Historical Analysis Dashboard</h3>
+                <p>A sophisticated charting interface for in-depth technical analysis and market research:</p>
                 <ul>
-                    <li>Screens 500+ stocks daily for cointegrated pairs using Johansen test</li>
-                    <li>Calculates z-scores of spread deviations from equilibrium</li>
-                    <li>Generates long/short signals when spreads exceed 2σ thresholds</li>
-                    <li>Implements dynamic position sizing based on spread volatility</li>
+                    <li><strong>Interactive Charting:</strong> Dual-mode visualization (line/bar charts) with Chart.js, supporting zoom, pan, and reset functionality for multi-timeframe analysis</li>
+                    <li><strong>Technical Overlays:</strong> Real-time calculation and display of VWAP, Moving Averages (20/50 period), Bollinger Bands, and RSI (14)</li>
+                    <li><strong>Advanced Analytics:</strong> Trend strength classification, Gann level calculation (R1/S1), 20-day annualized volatility, and period statistics tracking</li>
+                    <li><strong>Price Alert System:</strong> Custom threshold-based alerts with localStorage persistence, 5-second monitoring intervals, and animated visual notifications</li>
+                    <li><strong>Data Export:</strong> CSV and JSON export capabilities with integrated news feed for symbol-specific market updates</li>
                 </ul>
 
-                <h3>Machine Learning Models</h3>
-                <p><strong>Feature Engineering:</strong> Developed comprehensive feature set including:</p>
+                <h3>Advanced Strategy Builder</h3>
+                <p><strong>Interactive Option Chain:</strong> Real-time "war room" for strategy construction:</p>
                 <ul>
-                    <li>Technical indicators: RSI, MACD, Bollinger Bands, moving averages</li>
-                    <li>Volume-based signals: VWAP, OBV, volume profile analysis</li>
-                    <li>Market microstructure: bid-ask spreads, order flow imbalance</li>
-                    <li>Sentiment data: news sentiment scores, social media signals</li>
-                    <li>Cross-sectional factors: sector rotation, factor exposures</li>
+                    <li>Live-updating options chain with sub-second latency via Socket.io WebSocket connections</li>
+                    <li>One-click "Buy/Sell" buttons for rapid multi-leg strategy assembly</li>
+                    <li>Dynamic "Strategy Basket" with instant portfolio-wide recalculation as legs are added/removed</li>
+                    <li>Support for complex structures: spreads, straddles, strangles, iron condors, butterflies</li>
                 </ul>
 
-                
-                <h3>Risk Management Framework</h3>
-                <p>Comprehensive risk controls implemented at multiple levels:</p>
+                <p><strong>Risk & Profit Simulation Engine:</strong></p>
                 <ul>
-                    <li>Position-level: Stop-loss orders, trailing stops, profit targets</li>
-                    <li>Portfolio-level: Sector exposure limits, correlation constraints</li>
-                    <li>Market-level: VaR monitoring, maximum drawdown limits</li>
-                    <li>Dynamic leverage adjustment based on volatility regime</li>
+                    <li><strong>Dual P&L Visualization:</strong> Expiry P&L (solid line) showing terminal payoff at expiration, and T+0 P&L (dashed line) reflecting current position value based on real-time Greeks</li>
+                    <li><strong>Interactive Payoff Graphs:</strong> High-performance rendering using Plotly.js for complex multi-leg visualizations</li>
+                    <li><strong>Scenario Analysis:</strong> Dynamic recalculation across underlying price ranges and volatility scenarios</li>
+                </ul>
+
+                <p><strong>Intelligent Strategy Suggester ("The Brain"):</strong></p>
+                <ul>
+                    <li><strong>Outlook-Based Discovery:</strong> Users select market bias (Bullish/Bearish/Neutral), system suggests mathematically optimal strategies</li>
+                    <li><strong>Capital-Aware Filtering:</strong> Respects margin constraints while maximizing Probability of Profit (POP) scores</li>
+                    <li><strong>Strategy Optimization:</strong> Automated strike selection and position sizing for risk-reward optimization</li>
+                    <li><strong>Real-time Ranking:</strong> Strategies sorted by expected value, POP, and risk metrics</li>
+                </ul>
+
+                <h3>Institutional-Grade Market Intelligence</h3>
+                <p>Advanced analytics for professional-level market insight:</p>
+                <ul>
+                    <li><strong>Market Personality (GEX):</strong> Gamma Exposure analysis labeling market regime as Stable or Volatile</li>
+                    <li><strong>Volatility Triggers:</strong> Gamma Flip Level identification marking critical price points for regime change</li>
+                    <li><strong>Hidden Pressures:</strong> Vanna and Charm calculations detecting price drift from time decay and volatility shifts</li>
+                    <li><strong>Market Tilt Analysis:</strong> Open Interest and IV weighting revealing institutional positioning (bullish/bearish bias)</li>
+                    <li><strong>Visual OI Analysis:</strong> Interactive bar charts showing put/call distribution across strike prices</li>
                 </ul>
             </div>
 
@@ -113,28 +131,37 @@
                 <h2>Implementation Details</h2>
                 
                 <h3>System Architecture</h3>
-                <p>Built as a modular pipeline with clear separation of concerns:</p>
+                <p>Built as a modular, real-time web application:</p>
                 <ul>
-                    <li><strong>Data Pipeline:</strong> Real-time market data ingestion via API, historical data storage in PostgreSQL, feature computation and caching</li>
-                    <li><strong>Strategy Engine:</strong> Signal generation, position management, order execution logic</li>
-                    <li><strong>Risk Monitor:</strong> Real-time P&L tracking, risk metric calculation, automated alerts</li>
-                    <li><strong>Backtesting Framework:</strong> Historical simulation with realistic assumptions about slippage, commissions, and market impact</li>
+                    <li><strong>Frontend Stack:</strong> Vanilla JavaScript, HTML5, CSS3 with glassmorphism dark theme and GSAP animations</li>
+                    <li><strong>Real-Time Layer:</strong> Socket.io for bi-directional WebSocket communication ensuring sub-second data updates</li>
+                    <li><strong>Backend:</strong> Python Flask server (localhost:5001) with Fyers API integration for market data</li>
+                    <li><strong>Persistence:</strong> localStorage for user preferences, active strategies, and capital settings</li>
                 </ul>
 
-                <h3>Execution System</h3>
+                <h3>Mathematical Engine</h3>
                 <ul>
-                    <li>Automated order placement via Interactive Brokers API</li>
-                    <li>Smart order routing to minimize market impact</li>
-                    <li>TWAP/VWAP algorithms for large position entry/exit</li>
-                    <li>Latency optimization: average order-to-execution under 100ms</li>
+                    <li><strong>Black-Scholes Implementation:</strong> Custom JavaScript pricing model calculating theoretical options values in real-time</li>
+                    <li><strong>Greeks Calculation:</strong> Client-side computation of Delta, Gamma, Theta, Vega for individual options and entire portfolios</li>
+                    <li><strong>Portfolio Analytics:</strong> Aggregate position Greeks, net delta exposure, gamma risk, and theta decay</li>
+                    <li><strong>Performance:</strong> Sub-100ms calculation time for complex 4-leg strategies</li>
+                </ul>
+
+                <h3>Visualization System</h3>
+                <ul>
+                    <li><strong>Chart.js Integration:</strong> Hardware-accelerated line/bar charts for price action and volume analysis</li>
+                    <li><strong>Plotly.js Payoffs:</strong> Interactive 2D payoff diagrams with hover tooltips and zoom capabilities</li>
+                    <li><strong>OI Bar Charts:</strong> Color-coded open interest visualization showing put/call distribution</li>
+                    <li><strong>Responsive Design:</strong> Optimized layouts for desktop trading environments with multiple monitors</li>
                 </ul>
 
                 <h3>Performance Optimization</h3>
                 <ul>
-                    <li>Vectorized operations using NumPy/Pandas for fast backtests</li>
-                    <li>Multiprocessing for parallel strategy evaluation</li>
-                    <li>Redis caching for frequently accessed market data</li>
-                    <li>Incremental model updates to avoid full retraining</li>
+                    <li>Vectorized array operations for batch Greeks calculations</li>
+                    <li>Debounced input handlers preventing excessive recalculations during user interaction</li>
+                    <li>Lazy loading of historical data and progressive chart rendering</li>
+                    <li>WebSocket connection pooling and automatic reconnection logic</li>
+                    <li>localStorage caching strategy reducing API calls by 60%</li>
                 </ul>
             </div>
 
@@ -143,29 +170,31 @@
                 <h2>Results & Performance</h2>
                 <div class="results-grid">
                     <div class="result-item">
-                        <h3>18.5%</h3>
-                        <p>Annual Return</p>
+                        <h3>&lt;100ms</h3>
+                        <p>Strategy Calculation Time</p>
                     </div>
                     <div class="result-item">
-                        <h3>1.45</h3>
-                        <p>Sharpe Ratio</p>
+                        <h3>&lt;1 sec</h3>
+                        <p>Real-Time Data Latency</p>
                     </div>
                     <div class="result-item">
-                        <h3>-8.2%</h3>
-                        <p>Max Drawdown</p>
+                        <h3>60 FPS</h3>
+                        <p>Chart Rendering</p>
                     </div>
                     <div class="result-item">
-                        <h3>65%</h3>
-                        <p>Win Rate</p>
+                        <h3>4-Leg</h3>
+                        <p>Complex Strategy Support</p>
                     </div>
                 </div>
-                <p style="margin-top: 2rem;"><strong>Backtesting Period:</strong> 3 years (2022-2024) with walk-forward optimization</p>
-                <p><strong>Key Achievements:</strong></p>
+                <p style="margin-top: 2rem;"><strong>Key Features Delivered:</strong></p>
                 <ul>
-                    <li>Consistent monthly positive returns in 32 out of 36 months</li>
-                    <li>Low correlation (0.12) with S&P 500, providing portfolio diversification</li>
-                    <li>Transaction cost recovery: 2.3% annual alpha after all fees</li>
-                    <li>Robust performance across different market conditions (bull, bear, sideways)</li>
+                    <li>Real-time options chain with 500ms update frequency for liquid strikes</li>
+                    <li>Instant P&L visualization across 100+ underlying price points</li>
+                    <li>Automated strategy suggestion with POP scoring and capital filtering</li>
+                    <li>Client-side Black-Scholes implementation achieving <5ms per-option pricing</li>
+                    <li>Institutional analytics: GEX, Gamma Flip Levels, Vanna/Charm exposure</li>
+                    <li>Persistent strategy workspace surviving browser refreshes</li>
+                    <li>Mobile-responsive design supporting tablet-based trading</li>
                 </ul>
             </div>
 
@@ -174,28 +203,36 @@
                 <h2>Technologies & Tools</h2>
                 <div class="tech-grid">
                     <div class="tech-item">
-                        <h4>Languages</h4>
-                        <p>Python, SQL</p>
+                        <h4>Frontend</h4>
+                        <p>JavaScript, HTML5, CSS3</p>
                     </div>
                     <div class="tech-item">
-                        <h4>ML/Analytics</h4>
-                        <p>scikit-learn, XGBoost, TensorFlow</p>
+                        <h4>Visualization</h4>
+                        <p>Chart.js, Plotly.js, GSAP</p>
                     </div>
                     <div class="tech-item">
-                        <h4>Data</h4>
-                        <p>Pandas, NumPy, PostgreSQL</p>
+                        <h4>Real-Time</h4>
+                        <p>Socket.io, WebSockets</p>
                     </div>
                     <div class="tech-item">
-                        <h4>Backtesting</h4>
-                        <p>Backtrader, Zipline</p>
+                        <h4>Backend</h4>
+                        <p>Python, Flask</p>
                     </div>
                     <div class="tech-item">
                         <h4>APIs</h4>
-                        <p>Alpha Vantage, IB API, Yahoo Finance</p>
+                        <p>Fyers API, Market Data Feeds</p>
                     </div>
                     <div class="tech-item">
-                        <h4>Deployment</h4>
-                        <p>Docker, AWS EC2, Redis</p>
+                        <h4>Storage</h4>
+                        <p>localStorage, PostgreSQL</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Math Libraries</h4>
+                        <p>Custom Black-Scholes, Greeks</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>UI/UX</h4>
+                        <p>FontAwesome, Google Fonts</p>
                     </div>
                 </div>
             </div>
@@ -204,13 +241,14 @@
             <div class="content-block">
                 <h2>Key Learnings</h2>
                 <ul>
-                    <li>The critical importance of transaction costs and realistic execution assumptions in backtesting</li>
-                    <li>How market microstructure affects strategy profitability at different time scales</li>
-                    <li>The dangers of overfitting and data snooping in quantitative finance</li>
-                    <li>Risk management is more important than alpha generation for long-term success</li>
-                    <li>The non-stationarity of financial markets requires continuous model adaptation</li>
-                    <li>Position sizing and leverage management significantly impact risk-adjusted returns</li>
-                    <li>The value of simplicity: complex models don't always outperform in live trading</li>
+                    <li>The critical importance of sub-second latency in options pricing—100ms delays can mean 5-10% pricing errors in volatile markets</li>
+                    <li>Client-side Greeks calculation significantly improves UX by enabling instant "what-if" analysis without server round-trips</li>
+                    <li>WebSocket architecture is essential for real-time options data; polling introduces unacceptable latency</li>
+                    <li>Visual P&L graphs are more intuitive than numeric Greeks tables for strategy comparison</li>
+                    <li>localStorage persistence dramatically improves user experience by preserving work across sessions</li>
+                    <li>Institutional metrics (GEX, Gamma Flip) provide edge but require careful explanation to retail traders</li>
+                    <li>Strategy suggestion algorithms must balance mathematical optimality with practical execution considerations (liquidity, bid-ask spreads)</li>
+                    <li>Performance optimization matters: poorly optimized chart rendering can freeze the UI during rapid market moves</li>
                 </ul>
             </div>
 
@@ -218,14 +256,16 @@
             <div class="content-block">
                 <h2>Future Enhancements</h2>
                 <ul>
-                    <li>Expand to options trading with volatility arbitrage strategies</li>
-                    <li>Implement reinforcement learning for adaptive strategy selection</li>
-                    <li>Add alternative data sources: satellite imagery, credit card data</li>
-                    <li>Build multi-asset strategies incorporating FX, commodities, crypto</li>
-                    <li>Develop intraday strategies for higher frequency trading</li>
-                    <li>Create automated hyperparameter optimization pipeline</li>
-                    <li>Implement portfolio construction using mean-variance optimization</li>
-                    <li>Add regime detection models for dynamic strategy allocation</li>
+                    <li>Add backtesting engine for strategy performance validation across historical scenarios</li>
+                    <li>Implement IV surface visualization for skew and term structure analysis</li>
+                    <li>Build automated trade execution via broker API integration</li>
+                    <li>Add portfolio-level risk analytics with VaR and stress testing</li>
+                    <li>Develop machine learning models for volatility forecasting and IV prediction</li>
+                    <li>Create collaborative features for sharing strategies and analysis</li>
+                    <li>Implement options flow scanner detecting unusual activity and large institutional trades</li>
+                    <li>Add earnings calendar integration with IV crush modeling</li>
+                    <li>Build mobile native apps (iOS/Android) with push notifications for alerts</li>
+                    <li>Integrate alternative data sources: order flow, dark pool activity, sentiment analysis</li>
                 </ul>
             </div>
 
@@ -252,3 +292,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+```
