@@ -208,11 +208,64 @@ footer {
     60% {transform: translateY(-5px);}
 }
 
+/* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
-    .hero h1 { font-size: 15vw; }
-    .timeline-item { flex-direction: column; }
-    .timeline-year { margin-bottom: 1rem; }
-    .timeline-content { width: 100%; }
-    .nav-right { gap: 1rem; }
-    .back-link span { display: none; }
+    
+    /* 1. HIDE CUSTOM CURSOR (Phones don't have mice) */
+    .cursor-dot, .cursor-outline { 
+        display: none !important; 
+    }
+    * { 
+        cursor: auto !important; /* Restore normal touch behavior */
+    }
+
+    /* 2. HERO SECTION */
+    .hero h1 { 
+        font-size: 15vw; /* Make text bigger on vertical screens */
+    }
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    /* 3. TIMELINE STACKING */
+    .timeline-item { 
+        flex-direction: column; 
+    }
+    .timeline-year { 
+        margin-bottom: 0.5rem; 
+        font-size: 1.5rem; /* Smaller year font */
+        width: 100%;
+    }
+    .timeline-content { 
+        width: 100%; 
+    }
+
+    /* 4. NAVIGATION FIXES */
+    nav {
+        padding: 1.5rem 5vw;
+    }
+    .nav-right { 
+        gap: 1rem; 
+    }
+    
+    /* Make the Back Button Icon bigger for thumbs */
+    .back-link { 
+        padding: 0.6rem; /* Bigger touch target */
+    }
+    .back-link svg { 
+        width: 20px; 
+        height: 20px; 
+    }
+    .back-link span { 
+        display: none; /* Hide text "Back to Main" on mobile to save space */
+    }
+
+    /* 5. HORIZONTAL SCROLL ADJUSTMENT */
+    /* Ensure the panels don't get cut off by browser address bars */
+    .panel {
+        height: 100dvh; /* "dvh" adapts to mobile address bars better than "vh" */
+    }
+    .panel h2 {
+        font-size: 12vw; /* Adjust headline size */
+    }
 }
