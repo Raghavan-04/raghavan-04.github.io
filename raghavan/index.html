@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raghavan | Visuals & Audio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="raghavan.css">
+</head>
+<body>
 
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav>
+        <div class="logo">RAGHAVAN.</div>
+        
+        <div class="nav-right">
+            <a href="../index.html" class="back-link" data-hover>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Main</span>
+            </a>
+            
+            <a href="#contact" class="menu-link" data-hover>CONTACT</a>
+        </div>
+    </nav>
+
+    <main>
+        
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Raghavan.</h1>
+            </div>
+            <p>Visual Storyteller & Audiophile.</p>
+            
+            <div class="scroll-indicator">
+                <span class="scroll-text">Explore</span>
+                <svg class="arrow-icon" viewBox="0 0 24 24">
+                    <path d="M12 21l-12-18h24z"/>
+                </svg>
+            </div>
+        </section>
+
+        <section class="section-header">
+            <h2 class="section-title">The Timeline</h2>
+        </section>
+
+        <section class="timeline-container">
+            <div class="timeline-item" data-hover>
+                <div class="timeline-year">May 4, 2004</div>
+                <div class="timeline-content">
+                    <h3>The Origin</h3>
+                    <p>The journey began. A curiosity for the world and the sounds that fill it was sparked.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-hover>
+                <div class="timeline-year">2018</div>
+                <div class="timeline-content">
+                    <h3>Visual Discovery</h3>
+                    <p>Picked up my first DSLR. Learned that photography isn't just about capturing light, but about freezing emotion in time.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-hover>
+                <div class="timeline-year">2022</div>
+                <div class="timeline-content">
+                    <h3>High Fidelity</h3>
+                    <p>Dove deep into the world of audiophiles. Moving beyond casual listening to appreciating the nuance of lossless audio and analog warmth.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-hover>
+                <div class="timeline-year">2026</div>
+                <div class="timeline-content">
+                    <h3>The Vision</h3>
+                    <p>Mastering the intersection of sight and sound. Building immersive experiences that engage all senses.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="horizontal-wrapper">
+            <div class="horizontal-container">
+                
+                <section class="panel" style="background-color: #111;">
+                    <div class="panel-num">01</div>
+                    <div class="panel-content">
+                        <h2>My<br>Interests</h2>
+                        <p>Scroll right to see what drives me &rarr;</p>
+                    </div>
+                </section>
+
+                <section class="panel" style="background-image: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                    <div class="panel-num">02</div>
+                    <div class="panel-content">
+                        <h2>Photography</h2>
+                        <p>Capturing the unseen. Street, landscape, and portraiture through a cinematic lens.</p>
+                    </div>
+                </section>
+
+                <section class="panel" style="background-image: url('https://images.unsplash.com/photo-1621360841012-3f82bd6e414c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                    <div class="panel-num">03</div>
+                    <div class="panel-content">
+                        <h2>Audiophile</h2>
+                        <p>The pursuit of sonic perfection. From vinyl rituals to high-res DACs. It's about feeling the music, not just hearing it.</p>
+                    </div>
+                </section>
+
+                <section class="panel" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                    <div class="panel-num">04</div>
+                    <div class="panel-content">
+                        <h2>Exploration</h2>
+                        <p>Traveling to find new perspectives, new sounds, and new stories to tell.</p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <footer id="contact">
+            <h2 class="footer-cta">Raghavan.</h2>
+            <p style="margin-bottom: 2rem; color: #888;">Created in 2026</p>
+            <a href="mailto:raghavan@example.com" class="footer-link" data-hover>Say Hello</a>
+        </footer>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <script src="raghavan.js"></script>
+</body>
+</html>
