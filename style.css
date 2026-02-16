@@ -762,6 +762,9 @@ html {
     .menu-overlay {
     display: none; /* Keeps the desktop menu clean */
 }
+    .hamburger {
+    display: none;
+}
 
     /* Hide Hamburger when menu is open (optional, since we have the close button) */
     .hamburger.active {
