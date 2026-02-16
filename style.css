@@ -704,13 +704,14 @@ html {
 
     /* --- OVERLAY (The "Touch Content" area) --- */
     .menu-overlay {
+        display: block; /* Make sure it exists on mobile */
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.5); /* Dark transparent dim */
-        z-index: 1000; /* Behind menu, above content */
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
@@ -748,6 +749,7 @@ html {
 
     /* --- MANUAL CLOSE BUTTON (Inside Menu) --- */
     .menu-close-btn {
+        display: block; /* Show the X button on mobile */
         position: absolute;
         top: 20px;
         right: 25px;
@@ -757,6 +759,9 @@ html {
         line-height: 1;
         padding: 10px;
     }
+    .menu-overlay {
+    display: none; /* Keeps the desktop menu clean */
+}
 
     /* Hide Hamburger when menu is open (optional, since we have the close button) */
     .hamburger.active {
