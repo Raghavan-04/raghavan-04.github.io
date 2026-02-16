@@ -252,20 +252,39 @@ document.head.appendChild(style);
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
 });
+/* PASTE THIS AT THE BOTTOM OF SCRIPT.JS */
+
+// --- NEW MOBILE MENU LOGIC ---
 const hamburger = document.querySelector(".hamburger");
-const navMenu = document.querySelector("nav ul");
+const navMenu = document.querySelector(".nav-menu"); // Matches the <ul class="nav-menu"> in your HTML
+const overlay = document.querySelector(".menu-overlay");
+const closeBtn = document.querySelector(".menu-close-btn");
 
-hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
+// Function to Open Menu
+function openMenu() {
+    if (hamburger) hamburger.classList.add("active");
+    if (navMenu) navMenu.classList.add("active");
+    if (overlay) overlay.classList.add("active");
+    document.body.style.overflow = "hidden"; // Disable scrolling on the main page
+}
+
+// Function to Close Menu
+function closeMenu() {
+    if (hamburger) hamburger.classList.remove("active");
+    if (navMenu) navMenu.classList.remove("active");
+    if (overlay) overlay.classList.remove("active");
+    document.body.style.overflow = "auto"; // Enable scrolling again
+}
+
+// Event Listeners
+if (hamburger) hamburger.addEventListener("click", openMenu);
+if (closeBtn) closeBtn.addEventListener("click", closeMenu); // The "X" button
+if (overlay) overlay.addEventListener("click", closeMenu);   // The dark background
+
+// Close menu when clicking any link
+document.querySelectorAll(".nav-menu li a").forEach(link => {
+    link.addEventListener("click", closeMenu);
 });
-
-// Close menu when a link is clicked
-document.querySelectorAll("nav ul li a").forEach(n => n.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navMenu.classList.remove("active");
-}));
-
 // Prevent right-click on images (optional - for portfolio protection)
 /*
 document.querySelectorAll('img').forEach(img => {
