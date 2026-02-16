@@ -601,7 +601,13 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
-
+/* --- HIDE MOBILE ELEMENTS ON DESKTOP --- */
+/* Add this OUTSIDE of any @media query */
+.menu-close-btn, 
+.menu-overlay,
+.hamburger {
+    display: none;
+}
 @media (max-width: 640px) {
     nav ul {
         gap: 1.5rem;
@@ -759,12 +765,7 @@ html {
         line-height: 1;
         padding: 10px;
     }
-    .menu-overlay {
-    display: none; /* Keeps the desktop menu clean */
-}
-    .hamburger {
-    display: none;
-}
+    
 
     /* Hide Hamburger when menu is open (optional, since we have the close button) */
     .hamburger.active {
