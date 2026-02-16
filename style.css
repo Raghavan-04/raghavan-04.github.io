@@ -687,63 +687,83 @@ html {
     background-color: var(--primary); /* Uses your existing dark color */
     transition: all 0.3s ease-in-out;
 }
-/* 2. Mobile Logic (Triggers on phones/tablets) */
 @media (max-width: 768px) {
     
-    /* CRITICAL FIX: Disable nav animation so fixed menu works */
+    /* Disable animation on nav to prevent bugs */
     nav {
         animation: none !important;
         height: auto;
-        overflow: visible; /* Allows menu to spill out of the nav bar */
+        overflow: visible;
     }
 
-    /* Show the hamburger button */
+    /* --- HAMBURGER --- */
     .hamburger {
         display: block;
+        z-index: 1002; /* High z-index */
     }
 
-    /* Hide the hamburger bar inside the button to turn it into an X when active */
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-    /* 3. The Sliding Side Menu */
-    nav ul {
-        display: flex; /* Force flex layout */
+    /* --- OVERLAY (The "Touch Content" area) --- */
+    .menu-overlay {
         position: fixed;
         top: 0;
-        right: -100%; /* Start hidden off-screen */
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); /* Dark transparent dim */
+        z-index: 1000; /* Behind menu, above content */
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(2px);
+    }
+
+    /* Show overlay when active */
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* --- MENU DRAWER --- */
+    nav ul.nav-menu {
+        display: flex;
+        position: fixed;
+        top: 0;
+        right: -100%;
         width: 75%;
         height: 100vh;
-        background: var(--secondary); /* Matches your site theme */
-        
-        /* Flexbox to center the links */
+        background: var(--secondary);
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 2rem;
-        
-        /* Styling borders and shadows */
-        border-left: 1px solid var(--border);
         box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother animation */
-        padding: 0;
-        margin: 0;
-        z-index: 1002; /* Must be higher than nav (1000) and hamburger (1001) */
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001; /* Above overlay */
+        padding-top: 2rem; /* Space for close button */
     }
 
-    /* This class is added by JavaScript to slide the menu in */
-    nav ul.active {
+    nav ul.nav-menu.active {
         right: 0;
     }
 
-    /* Make links bigger on mobile for easier tapping */
+    /* --- MANUAL CLOSE BUTTON (Inside Menu) --- */
+    .menu-close-btn {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 2.5rem;
+        color: var(--primary);
+        cursor: pointer;
+        line-height: 1;
+        padding: 10px;
+    }
+
+    /* Hide Hamburger when menu is open (optional, since we have the close button) */
+    .hamburger.active {
+        opacity: 0;
+        pointer-events: none;
+    }
+
     nav ul li a {
         font-size: 1.5rem;
         font-family: 'Playfair Display', serif;
