@@ -666,3 +666,79 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #b89851;
 }
+
+/* =========================================
+   HAMBURGER MENU & MOBILE NAVIGATION
+   Add this to the very bottom of your CSS
+   ========================================= */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it sits above the menu overlay */
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--primary); /* Uses your existing dark color */
+    transition: all 0.3s ease-in-out;
+}
+
+/* 2. Mobile Logic (Triggers on phones/tablets) */
+@media (max-width: 768px) {
+    
+    /* Show the hamburger button */
+    .hamburger {
+        display: block;
+    }
+
+    /* Hide the hamburger bar inside the button to turn it into an X when active */
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* 3. The Sliding Side Menu */
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Start hidden off-screen to the right */
+        width: 75%;   /* Cover 75% of the screen */
+        height: 100vh;
+        background: var(--secondary); /* Uses your existing background color */
+        
+        /* Flexbox to center the links vertically */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        
+        /* Styling borders and shadows */
+        border-left: 1px solid var(--border);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: right 0.4s ease-in-out;
+        padding: 0;
+        margin: 0;
+        z-index: 999; /* Behind the hamburger button */
+    }
+
+    /* This class is added by JavaScript to slide the menu in */
+    nav ul.active {
+        right: 0;
+    }
+
+    /* Make links bigger on mobile for easier tapping */
+    nav ul li a {
+        font-size: 1.5rem;
+        font-family: 'Playfair Display', serif; /* Use your fancy font for mobile menu */
+    }
+}
