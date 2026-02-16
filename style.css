@@ -601,13 +601,7 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
-/* --- HIDE MOBILE ELEMENTS ON DESKTOP --- */
-/* Add this OUTSIDE of any @media query */
-.menu-close-btn, 
-.menu-overlay,
-.hamburger {
-    display: none;
-}
+
 @media (max-width: 640px) {
     nav ul {
         gap: 1.5rem;
@@ -777,5 +771,18 @@ html {
         font-size: 1.5rem;
         font-family: 'Playfair Display', serif;
         color: var(--primary);
+    }
+}
+
+/* =========================================
+   FINAL FIX: FORCE HIDE ON DESKTOP
+   Paste this at the very bottom of style.css
+   ========================================= */
+
+@media (min-width: 769px) {
+    .menu-close-btn, 
+    .menu-overlay, 
+    .hamburger {
+        display: none !important;
     }
 }
