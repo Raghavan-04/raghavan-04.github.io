@@ -687,10 +687,16 @@ html {
     background-color: var(--primary); /* Uses your existing dark color */
     transition: all 0.3s ease-in-out;
 }
-
 /* 2. Mobile Logic (Triggers on phones/tablets) */
 @media (max-width: 768px) {
     
+    /* CRITICAL FIX: Disable nav animation so fixed menu works */
+    nav {
+        animation: none !important;
+        height: auto;
+        overflow: visible; /* Allows menu to spill out of the nav bar */
+    }
+
     /* Show the hamburger button */
     .hamburger {
         display: block;
@@ -709,14 +715,15 @@ html {
 
     /* 3. The Sliding Side Menu */
     nav ul {
+        display: flex; /* Force flex layout */
         position: fixed;
         top: 0;
-        right: -100%; /* Start hidden off-screen to the right */
-        width: 75%;   /* Cover 75% of the screen */
+        right: -100%; /* Start hidden off-screen */
+        width: 75%;
         height: 100vh;
-        background: var(--secondary); /* Uses your existing background color */
+        background: var(--secondary); /* Matches your site theme */
         
-        /* Flexbox to center the links vertically */
+        /* Flexbox to center the links */
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -725,10 +732,10 @@ html {
         /* Styling borders and shadows */
         border-left: 1px solid var(--border);
         box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        transition: right 0.4s ease-in-out;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother animation */
         padding: 0;
         margin: 0;
-        z-index: 999; /* Behind the hamburger button */
+        z-index: 1002; /* Must be higher than nav (1000) and hamburger (1001) */
     }
 
     /* This class is added by JavaScript to slide the menu in */
@@ -739,6 +746,7 @@ html {
     /* Make links bigger on mobile for easier tapping */
     nav ul li a {
         font-size: 1.5rem;
-        font-family: 'Playfair Display', serif; /* Use your fancy font for mobile menu */
+        font-family: 'Playfair Display', serif;
+        color: var(--primary);
     }
 }
