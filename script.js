@@ -252,6 +252,19 @@ document.head.appendChild(style);
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
 });
+const hamburger = document.querySelector(".hamburger");
+const navMenu = document.querySelector("nav ul");
+
+hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active");
+});
+
+// Close menu when a link is clicked
+document.querySelectorAll("nav ul li a").forEach(n => n.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navMenu.classList.remove("active");
+}));
 
 // Prevent right-click on images (optional - for portfolio protection)
 /*
