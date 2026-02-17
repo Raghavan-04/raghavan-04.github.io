@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sweat Sodium Monitor: IoT Biosensing Platform by Raghavan">
+    <title>Sweat Sodium Monitor - Raghavan</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-page.css">
+</head>
+<body>
+    <nav>
+    <div class="container">
+        <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
+
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <div class="menu-overlay"></div>
+
+        <ul class="nav-menu">
+            <div class="menu-close-btn">&times;</div>
+            
+            <li><a href="index.html#work">Work</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <a href="index.html#work" class="back-link">← Back to Projects</a>
+            <h1>Sweat Sodium Monitor</h1>
+            <p class="project-meta">IoT Biosensing • Embedded Systems • Colorimetry • 2025</p>
+            <div class="project-tags-hero">
+                <span class="tag">ESP32</span>
+                <span class="tag">C++ Firmware</span>
+                <span class="tag">Optical Sensing</span>
+                <span class="tag">REST API</span>
+                <span class="tag">3D Printing</span>
+                <span class="tag">Web Dashboard</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-content-section">
+        <div class="project-container">
+            
+            <div class="content-block">
+                <h2>Project Overview</h2>
+                <p><strong>The Sweat Sodium Monitor</strong> is a non-invasive, strip-based colorimetric sensing platform designed to detect sodium levels in human sweat. By integrating a custom photodiode-optical module with the Kubelka-Munk theory, the system eliminates subjective interpretation of test strips, offering automated, quantitative analysis for early detection of electrolyte imbalances.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>Who is it for?</h2>
+                <div class="roles-grid">
+                    <div class="role-item">
+                        <h3>For High-Risk Patients</h3>
+                        <p>Provides an early warning system for Hyponatremia and Hypernatremia—critical for elderly patients and those with chronic heart or kidney disease—without the pain of needles or blood draws.</p>
+                    </div>
+                    <div class="role-item">
+                        <h3>For Athletes</h3>
+                        <p>Enables real-time hydration tracking. By monitoring sweat sodium loss during intense activity, athletes can prevent muscle cramps and neurological dysfunction caused by severe electrolyte depletion.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>The Challenge</h2>
+                <p>Sweat analysis is plagued by environmental interference. Small samples <strong>evaporate rapidly</strong>, causing falsely high concentration readings. Additionally, <strong>ambient light leakage</strong> and <strong>variable sample volumes</strong> often render low-cost colorimetric strips inaccurate outside of controlled lab settings.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>The Innovation: Environmental Correction</h2>
+                <p>Unlike standard wearables, this device features <strong>Dynamic Environmental Integration</strong>. It combines sodium colorimetry with live temperature and humidity sensing to mathematically correct for evaporation effects in real-time. The system uses the <strong>Kubelka-Munk equation</strong> to translate raw light reflectance ($R$) into precise concentration values ($K/S$), bridging the gap between paper strips and digital precision.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>Technical Architecture</h2>
+                <p>The solution is a Multi-Modal Biosensing Platform built on three pillars:</p>
+                <ul>
+                    <li><strong>Optical Front-End:</strong> A custom 3D-printed enclosure housing a BPW34 Photodiode and multi-spectrum LEDs (Red/Green/Blue) to measure strip reflectance.</li>
+                    <li><strong>Processing Unit (ESP32):</strong> Handles signal digitization, runs the calibration algorithms, and manages non-blocking Wi-Fi auto-reconnection.</li>
+                    <li><strong>Wireless Dashboard:</strong> A lightweight web server hosted directly on the ESP32 serves a real-time UI, communicating via a REST API (/api/sensors) for live charting.</li>
+                </ul>
+            </div>
+
+            <div class="content-block highlight-block">
+                <h2>System Performance</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="metric-header">
+                            <h3>1.0s</h3>
+                            <span class="info-icon" data-tooltip="The system updates sensor data to the web dashboard every second via REST API." tabindex="0">ⓘ</span>
+                        </div>
+                        <p>Real-Time Latency</p>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="metric-header">
+                            <h3>90%</h3>
+                            <span class="info-icon" data-tooltip="Simulated peak correlation between Kubelka-Munk values and sodium concentration." tabindex="0">ⓘ</span>
+                        </div>
+                        <p>Simulation Accuracy</p>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="metric-header">
+                            <h3>100%</h3>
+                            <span class="info-icon" data-tooltip="Achieved via a non-blocking connection manager that handles network drops automatically." tabindex="0">ⓘ</span>
+                        </div>
+                        <p>Uptime/Reconnect</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Development Stack</h2>
+                <p>The system leverages <strong>C++</strong> for ESP32 firmware, <strong>HTML/JS</strong> for the embedded web interface, and <strong>Python</strong> for validating the Kubelka-Munk simulation models. The enclosure was designed in CAD and fabricated using <strong>PLA (Polylactic Acid)</strong>.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>Future Roadmap</h2>
+                <ul>
+                    <li><strong>Hybrid Sensing:</strong> Integrating electrochemical sensors for multi-biomarker detection (Glucose + Sodium).</li>
+                    <li><strong>Machine Learning:</strong> Implementing on-device ML to predict dehydration risks based on personal historical data.</li>
+                    <li><strong>Miniaturization:</strong> Moving from the prototype enclosure to a wearable patch form factor.</li>
+                </ul>
+            </div>
+
+            <div class="content-block" style="text-align: center; margin-top: 40px;">
+                <a href="#" class="nav-btn-center" style="display: inline-block; padding: 15px 30px; border: 1px solid #000; text-decoration: none; color: #000;">View Technical Paper</a>
+            </div>
+
+            <div class="project-navigation">
+                <a href="project-oncowise.html" class="nav-btn">← Previous Project</a>
+                <a href="index.html#work" class="nav-btn-center">All Projects</a>
+                <a href="#" class="nav-btn">Next Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Raghavan. Built with Engineering Precision & IoT Innovation.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
