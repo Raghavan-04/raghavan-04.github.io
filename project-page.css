@@ -346,130 +346,165 @@
 }
 
 /* =========================================
-   RESPONSIVE DESIGN (MOBILE OPTIMIZATIONS)
+   1. NAVIGATION (DESKTOP DEFAULT) 
    ========================================= */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(245, 245, 240, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+}
 
-/* Tablet & Small Laptop (Max: 968px) */
-@media (max-width: 968px) {
-    .project-hero {
-        padding: 8rem 2rem 4rem;
-        min-height: 50vh;
+nav .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.02em;
+}
+
+/* Desktop Menu Links */
+nav ul.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+/* Hover Effect for Desktop */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+nav a:hover::after { width: 100%; }
+nav a:hover { color: var(--accent); }
+
+
+/* --- HIDE MOBILE ELEMENTS ON DESKTOP (CRITICAL FIX) --- */
+.hamburger, 
+.menu-close-btn, 
+.menu-overlay {
+    display: none !important; /* Force hide on desktop */
+}
+/* =========================================
+   2. MOBILE NAVIGATION (Max-Width: 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Show the Hamburger */
+    .hamburger {
+        display: block !important;
+        cursor: pointer;
+        z-index: 1002;
+    }
+    
+    .hamburger .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        background-color: var(--primary);
+        transition: all 0.3s ease-in-out;
     }
 
-    .project-content-section {
-        padding: 4rem 2rem;
-    }
-
-    .content-block h2 {
-        font-size: 2rem;
-    }
-
-    .content-block h3 {
-        font-size: 1.5rem;
-    }
-
-    /* Auto-fit handles the grid columns better than hard coding */
-    .results-grid,
-    .tech-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .project-navigation {
+    /* 2. Transform the Menu into a Sidebar Drawer */
+    nav ul.nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Hide off-screen */
+        width: 75%;
+        height: 100vh;
+        background: var(--secondary); /* Menu background color */
+        
+        /* Stack items vertically */
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        border-left: 1px solid var(--border);
     }
 
-    .nav-btn,
-    .nav-btn-center {
+    /* 3. Class to slide menu in */
+    nav ul.nav-menu.active {
+        right: 0;
+    }
+
+    /* 4. Show the Close "X" Button inside the drawer */
+    .menu-close-btn {
+        display: block !important;
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 2.5rem;
+        color: var(--primary);
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    /* 5. The Dark Overlay */
+    .menu-overlay {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-    }
-
-    .highlight-block {
-        padding: 2rem;
-    }
-}
-
-/* Mobile Phone (Max: 640px) */
-@media (max-width: 640px) {
-    /* 1. Tighter Hero Padding for Mobile */
-    .project-hero {
-        padding: 7rem 1.5rem 3rem; /* Reduced side and top padding */
-    }
-
-    .project-hero h1 {
-        font-size: 2.2rem; /* Prevent massive text overflow */
-    }
-
-    .project-meta {
-        font-size: 1.1rem;
-    }
-
-    /* 2. Tighter Content Padding */
-    .project-content-section {
-        padding: 3rem 1.5rem;
-    }
-
-    .content-block p,
-    .content-block ul li {
-        font-size: 1.05rem; /* Slightly smaller readable text */
-    }
-
-    /* 3. Smarter Results Grid */
-    /* Use minmax to ensure items don't get squished */
-    .results-grid {
-        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-        gap: 1rem;
-    }
-
-    .result-item {
-        padding: 1rem; /* Compact padding */
-    }
-
-    .result-item h3 {
-        font-size: 1.8rem;
-    }
-
-    /* 4. Tech Grid - Stack on mobile */
-    .tech-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .project-tags-hero {
-        gap: 0.5rem;
-    }
-    
-    .project-tags-hero .tag {
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* Animation */
-@keyframes fadeInUp {
-    from {
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
         opacity: 0;
-        transform: translateY(30px);
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(2px);
     }
-    to {
+
+    .menu-overlay.active {
         opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Print Styles */
-@media print {
-    .project-hero {
-        min-height: auto;
-        padding: 2rem;
+        visibility: visible;
     }
 
-    nav,
-    .project-navigation,
-    footer {
-        display: none;
+    /* Mobile Text Styling */
+    nav ul.nav-menu li a {
+        font-size: 1.5rem; /* Larger text for mobile */
+        font-family: 'Playfair Display', serif;
     }
 
-    .content-block {
-        page-break-inside: avoid;
+    /* Hide the hamburger icon when menu is open (cleaner look) */
+    .hamburger.active {
+        opacity: 0;
+        pointer-events: none;
     }
 }
