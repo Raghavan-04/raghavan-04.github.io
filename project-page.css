@@ -344,9 +344,8 @@
     color: var(--text-light);
     font-size: 1.3rem;
 }
-
 /* =========================================
-   1. NAVIGATION (DESKTOP DEFAULT) 
+   1. NAVIGATION BAR (DESKTOP)
    ========================================= */
 nav {
     position: fixed;
@@ -367,13 +366,12 @@ nav .container {
     align-items: center;
 }
 
-/* Logo */
 .logo {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary);
-    letter-spacing: 0.02em;
+    text-decoration: none;
 }
 
 /* Desktop Menu Links */
@@ -389,116 +387,72 @@ nav a {
     text-decoration: none;
     color: var(--text);
     font-size: 1.1rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
     transition: color 0.3s ease;
     position: relative;
 }
 
-/* Hover Effect for Desktop */
-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--accent);
-    transition: width 0.3s ease;
+nav a:hover {
+    color: var(--accent);
 }
-nav a:hover::after { width: 100%; }
-nav a:hover { color: var(--accent); }
 
-
-/* --- HIDE MOBILE ELEMENTS ON DESKTOP (CRITICAL FIX) --- */
+/* --- CRITICAL: HIDE MOBILE ELEMENTS ON DESKTOP --- */
 .hamburger, 
 .menu-close-btn, 
 .menu-overlay {
-    display: none !important; /* Force hide on desktop */
+    display: none !important; /* Forces the "X" and hamburger to vanish on PC */
 }
+
+
 /* =========================================
-   HAMBURGER MENU & MOBILE NAVIGATION
-   Add this to the very bottom of your CSS
+   2. MOBILE NAVIGATION (Phones & Tablets)
    ========================================= */
-
-/* 1. Hamburger Icon (Hidden on Desktop) */
-.hamburger {
-    display: none;
-    cursor: pointer;
-    z-index: 1001; /* Ensure it sits above the menu overlay */
-}
-
-.bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: var(--primary); /* Uses your existing dark color */
-    transition: all 0.3s ease-in-out;
-}
 @media (max-width: 768px) {
     
-    /* Disable animation on nav to prevent bugs */
-    nav {
-        animation: none !important;
-        height: auto;
-        overflow: visible;
-    }
-
-    /* --- HAMBURGER --- */
+    /* 1. Show the Hamburger */
     .hamburger {
+        display: block !important;
+        cursor: pointer;
+        z-index: 1002;
+    }
+    
+    .bar {
         display: block;
-        z-index: 1002; /* High z-index */
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        background-color: var(--primary);
+        transition: all 0.3s ease-in-out;
     }
 
-    /* --- OVERLAY (The "Touch Content" area) --- */
-    .menu-overlay {
-        display: block; /* Make sure it exists on mobile */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(2px);
-    }
-
-    /* Show overlay when active */
-    .menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* --- MENU DRAWER --- */
+    /* 2. The Sliding Drawer Menu */
     nav ul.nav-menu {
-        display: flex;
         position: fixed;
         top: 0;
-        right: -100%;
+        right: -100%; /* Hidden off-screen by default */
         width: 75%;
         height: 100vh;
         background: var(--secondary);
+        
+        /* Vertical Stack */
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 2rem;
+        
+        border-left: 1px solid var(--border);
         box-shadow: -5px 0 15px rgba(0,0,0,0.1);
         transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1001; /* Above overlay */
-        padding-top: 2rem; /* Space for close button */
+        z-index: 1001;
     }
 
+    /* Active State (Slide In) */
     nav ul.nav-menu.active {
         right: 0;
     }
 
-    /* --- MANUAL CLOSE BUTTON (Inside Menu) --- */
+    /* 3. The Close "X" Button */
     .menu-close-btn {
-        display: block; /* Show the X button on mobile */
+        display: block !important;
         position: absolute;
         top: 20px;
         right: 25px;
@@ -506,32 +460,38 @@ nav a:hover { color: var(--accent); }
         color: var(--primary);
         cursor: pointer;
         line-height: 1;
-        padding: 10px;
+    }
+
+    /* 4. The Dark Overlay */
+    .menu-overlay {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(2px);
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Mobile Text Size */
+    nav ul.nav-menu li a {
+        font-size: 1.5rem;
+        font-family: 'Playfair Display', serif;
     }
     
-
-    /* Hide Hamburger when menu is open (optional, since we have the close button) */
+    /* Hide Hamburger when menu is open */
     .hamburger.active {
         opacity: 0;
         pointer-events: none;
-    }
-
-    nav ul li a {
-        font-size: 1.5rem;
-        font-family: 'Playfair Display', serif;
-        color: var(--primary);
-    }
-}
-
-/* =========================================
-   FINAL FIX: FORCE HIDE ON DESKTOP
-   Paste this at the very bottom of style.css
-   ========================================= */
-
-@media (min-width: 769px) {
-    .menu-close-btn, 
-    .menu-overlay, 
-    .hamburger {
-        display: none !important;
     }
 }
