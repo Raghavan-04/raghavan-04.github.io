@@ -294,3 +294,8 @@ document.querySelectorAll('img').forEach(img => {
     });
 });
 */
+
+// Add loading animation
+window.addEventListener('load', function() {
+    document.body.classList.add('loaded');
+});
