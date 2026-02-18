@@ -1,7 +1,8 @@
+
 :root {
     --bg-color: #080808;
     --text-color: #e0e0e0;
-    --accent-color: #d4af37; 
+    --accent-color: #d4af37; /* Gold/Brass color */
     --cursor-size: 20px;
 }
 
@@ -9,7 +10,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none; 
+    cursor: none; /* Hide default cursor */
 }
 
 body {
@@ -48,7 +49,7 @@ a { text-decoration: none; color: inherit; }
 
 body.hovering .cursor-outline {
     width: 80px; height: 80px;
-    background-color: rgba(212, 175, 55, 0.1); 
+    background-color: rgba(212, 175, 55, 0.1); /* Gold tint */
     border-color: var(--accent-color);
     backdrop-filter: blur(2px);
 }
@@ -80,6 +81,7 @@ nav {
     position: relative;
 }
 
+/* BACK LINK STYLE */
 .back-link {
     font-size: 0.8rem;
     letter-spacing: 1px;
@@ -206,52 +208,64 @@ footer {
     60% {transform: translateY(-5px);}
 }
 
-/* --- MOBILE OPTIMIZATION (THE BIG UPDATE) --- */
+/* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
     
-    /* 1. RESET TOUCH */
-    .cursor-dot, .cursor-outline { display: none !important; }
-    * { cursor: auto !important; }
-
-    /* 2. HERO FIXES */
-    .hero { height: 100dvh; } /* Adapts to mobile browser bars */
-    .hero h1 { 
-        font-size: 16vw; 
-        opacity: 1 !important; /* Force show in case JS fails */
-        transform: none !important;
+    /* 1. HIDE CUSTOM CURSOR (Phones don't have mice) */
+    .cursor-dot, .cursor-outline { 
+        display: none !important; 
     }
-    .hero p { 
-        font-size: 1.1rem; 
-        opacity: 1 !important; 
-        transform: none !important;
+    * { 
+        cursor: auto !important; /* Restore normal touch behavior */
+    }
+
+    /* 2. HERO SECTION */
+    .hero h1 { 
+        font-size: 11vw; /* Make text bigger on vertical screens */
+    }
+    .hero p {
+        font-size: 1.1rem;
     }
 
     /* 3. TIMELINE STACKING */
-    .timeline-item { flex-direction: column; padding: 2rem 0; }
-    .timeline-year { width: 100%; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-color); }
-    .timeline-content { width: 100%; }
-    .timeline-content h3 { font-size: 1.8rem; }
-
-    /* 4. NAVIGATION */
-    nav { padding: 1rem 5vw; }
-    .back-link span { display: none; } /* Hide text, keep icon */
-    .back-link { padding: 0.7rem; border-radius: 50%; }
-
-    /* 5. CONVERT HORIZONTAL TO VERTICAL STACK */
-    .horizontal-container { 
+    .timeline-item { 
         flex-direction: column; 
-        width: 100% !important; 
-        height: auto !important; 
     }
-    .panel { 
-        width: 100% !important; 
-        height: 80dvh !important; 
-        padding: 0 8vw;
+    .timeline-year { 
+        margin-bottom: 0.5rem; 
+        font-size: 1.5rem; /* Smaller year font */
+        width: 100%;
     }
-    .panel h2 { font-size: 12vw; }
-    .panel-num { font-size: 7rem; top: 2vh; right: 5vw; }
+    .timeline-content { 
+        width: 100%; 
+    }
 
-    /* 6. FOOTER */
-    .footer-cta { font-size: 14vw; }
-    .footer-link { font-size: 1rem; padding: 0.8rem 2rem; }
+    /* 4. NAVIGATION FIXES */
+    nav {
+        padding: 1.5rem 5vw;
+    }
+    .nav-right { 
+        gap: 1rem; 
+    }
+    
+    /* Make the Back Button Icon bigger for thumbs */
+    .back-link { 
+        padding: 0.6rem; /* Bigger touch target */
+    }
+    .back-link svg { 
+        width: 20px; 
+        height: 20px; 
+    }
+    .back-link span { 
+        display: none; /* Hide text "Back to Main" on mobile to save space */
+    }
+
+    /* 5. HORIZONTAL SCROLL ADJUSTMENT */
+    /* Ensure the panels don't get cut off by browser address bars */
+    .panel {
+        height: 100dvh; /* "dvh" adapts to mobile address bars better than "vh" */
+    }
+    .panel h2 {
+        font-size: 11vw; /* Adjust headline size */
+    }
 }
