@@ -1,35 +1,67 @@
+/* ============================================================
+   OPTIMIZED STYLESHEET — DESKTOP & MOBILE (PERFORMANCE FIXED)
+   Removed: backdrop-filter, SVG noise texture, background-clip
+            text gradients on hero/footer, mix-blend-mode on nav
+   ============================================================ */
 
+/* --- DESIGN TOKENS --- */
 :root {
     --bg-color: #080808;
     --text-color: #e0e0e0;
-    --accent-color: #d4af37; /* Gold/Brass color */
-    --cursor-size: 20px;
+    --accent-color: #d4af37;
+    --accent-glow: rgba(212, 175, 55, 0.12);
+    --muted: #666;
+    --border: #1e1e1e;
+
+    /* Fluid type scale — scales smoothly between 375px and 1440px */
+    --step--1: clamp(0.75rem,  0.7rem + 0.25vw, 0.875rem);
+    --step-0:  clamp(1rem,     0.9rem + 0.5vw,  1.125rem);
+    --step-1:  clamp(1.25rem,  1.1rem + 0.75vw, 1.5rem);
+    --step-2:  clamp(1.5rem,   1.2rem + 1.5vw,  2rem);
+    --step-3:  clamp(2rem,     1.5rem + 2.5vw,  3.5rem);
+    --step-4:  clamp(3rem,     2rem + 5vw,      7rem);
+    --step-5:  clamp(3.5rem,   2rem + 6vw,      8.7vw);
+
+    /* Fluid spacing */
+    --space-xs:  clamp(0.5rem,  0.4rem + 0.5vw, 0.75rem);
+    --space-s:   clamp(1rem,    0.8rem + 1vw,   1.5rem);
+    --space-m:   clamp(1.5rem,  1rem + 2vw,     3rem);
+    --space-l:   clamp(2rem,    1.5rem + 3vw,   5rem);
+    --space-xl:  clamp(4rem,    3rem + 5vw,     10vh);
+
+    --gutter: clamp(1.25rem, 5vw, 5rem);
+    --radius-pill: 50px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
+/* --- RESET --- */
+*, *::before, *::after {
+    margin: 0; padding: 0;
     box-sizing: border-box;
-    cursor: none; /* Hide default cursor */
+    cursor: none;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Inter', sans-serif;
+    font-size: var(--step-0);
+    line-height: 1.6;
     overflow-x: hidden;
-    width: 100%;
+    /* REMOVED: SVG feTurbulence noise — recalculated every frame = major lag */
 }
 
 /* --- TYPOGRAPHY --- */
 h1, h2, h3, .menu-link, .back-link {
     font-family: 'Syne', sans-serif;
     text-transform: uppercase;
+    letter-spacing: -0.02em;
 }
 
 a { text-decoration: none; color: inherit; }
 
-/* --- CUSTOM CURSOR --- */
+/* --- CUSTOM CURSOR (desktop only) --- */
 .cursor-dot, .cursor-outline {
     position: fixed;
     top: 0; left: 0;
@@ -37,21 +69,28 @@ a { text-decoration: none; color: inherit; }
     border-radius: 50%;
     z-index: 9999;
     pointer-events: none;
+    will-change: transform;
 }
 
-.cursor-dot { width: 8px; height: 8px; background-color: var(--accent-color); }
+.cursor-dot {
+    width: 6px; height: 6px;
+    background-color: var(--accent-color);
+}
 
 .cursor-outline {
-    width: 40px; height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: width 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                height 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                background-color 0.25s ease,
+                border-color 0.25s ease;
 }
 
 body.hovering .cursor-outline {
-    width: 80px; height: 80px;
-    background-color: rgba(212, 175, 55, 0.1); /* Gold tint */
+    width: 72px; height: 72px;
+    background-color: var(--accent-glow);
     border-color: var(--accent-color);
-    backdrop-filter: blur(2px);
+    /* REMOVED: backdrop-filter: blur() — single biggest lag culprit */
 }
 
 /* --- NAVIGATION --- */
@@ -59,81 +98,117 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 2rem 5vw;
+    padding: var(--space-s) var(--gutter);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    mix-blend-mode: difference;
+    /* REMOVED: mix-blend-mode: difference — expensive composite on every scroll frame */
 }
 
-.logo { font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; }
+.logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: var(--step-1);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #fff;
+}
 
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: var(--space-s);
 }
 
-.menu-link { 
-    font-size: 0.9rem; 
-    letter-spacing: 2px; 
+.menu-link {
+    font-size: var(--step--1);
+    letter-spacing: 0.15em;
     position: relative;
+    padding-bottom: 2px;
+    color: #fff;
 }
 
-/* BACK LINK STYLE */
+/* Animated underline — CSS only, zero repaint cost */
+.menu-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+}
+.menu-link:hover::after { width: 100%; }
+
 .back-link {
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    border: 1px solid white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    transition: all 0.3s ease;
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-pill);
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
+    color: #fff;
 }
 
 .back-link:hover {
     background: white;
     color: black;
+    border-color: white;
 }
 
 /* --- HERO SECTION --- */
 .hero {
-    height: 100vh;
+    min-height: 100svh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 5vw;
+    padding: 0 var(--gutter);
+    padding-top: 80px;
     position: relative;
 }
 
 .hero h1 {
-    font-size: 8.7vw;
-    line-height: 0.85;
+    font-size: var(--step-5);
+    line-height: 0.88;
     font-weight: 800;
-    margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(100px);
     color: #fff;
+    /* REMOVED: background-clip text gradient — forces layout repaint during JS animation */
+    opacity: 0;
+    transform: translateY(80px);
 }
 
 .hero p {
-    font-size: 1.5rem;
-    max-width: 500px;
-    line-height: 1.5;
-    color: #888;
+    font-size: var(--step-1);
+    max-width: 520px;
+    line-height: 1.55;
+    color: var(--muted);
     opacity: 0;
-    margin-top: 20px;
-    letter-spacing: 1px;
+    margin-top: var(--space-m);
+    letter-spacing: 0.02em;
 }
 
-/* --- SCROLL ARROW --- */
+/* Decorative accent line — cheap pseudo-element */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 20%;
+    right: var(--gutter);
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--accent-color), transparent);
+    opacity: 0.4;
+}
+
+/* --- SCROLL INDICATOR --- */
 .scroll-indicator {
     position: absolute;
-    bottom: 40px; left: 50%;
+    bottom: clamp(24px, 5vh, 48px);
+    left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
@@ -142,130 +217,302 @@ nav {
     opacity: 0;
 }
 
-.scroll-text { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #666; }
-.arrow-icon { width: 24px; height: 24px; animation: bounce 2s infinite; }
+.scroll-text {
+    font-size: var(--step--1);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.arrow-icon { width: 22px; height: 22px; animation: bounce 2.5s ease infinite; }
 .arrow-icon path { fill: white; }
 
 /* --- TIMELINE SECTION --- */
-.section-header { padding: 10vh 5vw 5vh 5vw; border-top: 1px solid #222; }
-.section-title { font-size: 4vw; margin-bottom: 20px; }
-.timeline-container { padding: 0 5vw 10vh 5vw; }
+.section-header {
+    padding: var(--space-xl) var(--gutter) var(--space-l) var(--gutter);
+    border-top: 1px solid var(--border);
+}
+
+.section-title {
+    font-size: var(--step-4);
+    line-height: 1;
+    margin-bottom: var(--space-s);
+}
+
+.timeline-container {
+    padding: 0 var(--gutter) var(--space-xl) var(--gutter);
+}
 
 .timeline-item {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-m);
     align-items: flex-start;
-    padding: 4rem 0;
-    border-top: 1px solid #222;
-    transition: background-color 0.3s;
+    padding: var(--space-l) 0;
+    border-top: 1px solid var(--border);
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+    border-radius: 4px;
 }
-.timeline-item:hover { background-color: #111; }
-.timeline-year { font-family: 'Syne', sans-serif; font-size: 2rem; color: #555; width: 30%; }
-.timeline-content { width: 60%; }
-.timeline-content h3 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent-color); }
-.timeline-content p { font-size: 1.1rem; line-height: 1.6; color: #aaa; }
+
+.timeline-item:hover {
+    background-color: #0e0e0e;
+    padding-left: var(--space-s);
+}
+
+.timeline-year {
+    font-family: 'Syne', sans-serif;
+    font-size: var(--step-2);
+    color: #3a3a3a;
+    padding-top: 6px;
+}
+
+.timeline-content h3 {
+    font-size: var(--step-3);
+    line-height: 1.1;
+    margin-bottom: var(--space-s);
+    color: var(--accent-color);
+}
+
+.timeline-content p {
+    font-size: var(--step-0);
+    line-height: 1.7;
+    color: #999;
+    max-width: 55ch;
+}
 
 /* --- HORIZONTAL SCROLL SECTION --- */
 .horizontal-wrapper { width: 100%; overflow: hidden; }
-.horizontal-container { display: flex; width: 400%; height: 100vh; } 
+
+.horizontal-container {
+    display: flex;
+    width: 400%;
+    height: 100svh;
+}
 
 .panel {
-    width: 100vw; height: 100vh;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 0 10vw; position: relative;
-    background-size: cover; background-position: center;
+    width: 100vw;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 var(--gutter) var(--space-xl) var(--gutter);
+    position: relative;
+    background-size: cover;
+    background-position: center;
 }
+
+/* Pure gradient overlay — no filter, GPU-composited */
 .panel::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7); z-index: 1; 
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.88) 30%, rgba(0,0,0,0.25) 100%);
+    z-index: 1;
 }
+
 .panel-content { position: relative; z-index: 2; }
-.panel h2 { font-size: 8vw; line-height: 1; margin-bottom: 2rem; color: white; }
-.panel p { font-size: 1.5rem; max-width: 600px; color: #ddd; }
+
+.panel h2 {
+    font-size: clamp(3rem, 8vw, 9rem);
+    line-height: 0.9;
+    margin-bottom: var(--space-s);
+    color: white;
+}
+
+.panel p {
+    font-size: var(--step-1);
+    max-width: 55ch;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+}
+
 .panel-num {
-    position: absolute; top: 10vh; right: 10vw;
-    font-size: 15rem; font-weight: 800; color: rgba(255,255,255,0.03);
-    font-family: 'Syne', sans-serif; z-index: 1;
+    position: absolute;
+    top: clamp(3rem, 10vh, 10vh);
+    right: var(--gutter);
+    font-size: clamp(6rem, 15rem, 18rem);
+    font-weight: 800;
+    color: rgba(255,255,255,0.03);
+    font-family: 'Syne', sans-serif;
+    z-index: 1;
+    line-height: 1;
+    user-select: none;
 }
 
 /* --- FOOTER --- */
 footer {
-    height: 80vh;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    background-color: #111; color: #fff; text-align: center;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d0d0d;
+    border-top: 1px solid var(--border);
+    color: #fff;
+    text-align: center;
+    padding: var(--space-xl) var(--gutter);
+    gap: var(--space-m);
 }
-.footer-cta { font-size: 8vw; font-weight: 800; line-height: 1; margin-bottom: 2rem; }
+
+.footer-cta {
+    font-size: clamp(2.5rem, 8vw, 9vw);
+    font-weight: 800;
+    font-family: 'Syne', sans-serif;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    /* REMOVED: background-clip text gradient — not worth the repaint cost */
+}
+
+/* Use a targeted <span class="accent"> in your HTML for gold words instead */
+.accent { color: var(--accent-color); }
+
 .footer-link {
-    font-size: 1.5rem; border: 2px solid white; padding: 1rem 3rem;
-    border-radius: 50px; text-transform: uppercase; font-weight: 600; transition: all 0.3s;
+    font-size: var(--step-1);
+    border: 2px solid rgba(255,255,255,0.4);
+    padding: 0.9rem 2.5rem;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    /* transform is compositor-only — safe to animate */
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
-.footer-link:hover { background: white; color: black; }
+
+.footer-link:hover {
+    background: white;
+    color: black;
+    border-color: white;
+    transform: scale(1.03);
+}
 
 /* --- ANIMATIONS --- */
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-10px);}
-    60% {transform: translateY(-5px);}
+    0%, 100% { transform: translateY(0); }
+    45%       { transform: translateY(-10px); }
+    65%       { transform: translateY(-4px); }
 }
 
-/* --- MOBILE OPTIMIZATION --- */
-@media (max-width: 768px) {
-    
-    /* 1. HIDE CUSTOM CURSOR (Phones don't have mice) */
-    .cursor-dot, .cursor-outline { 
-        display: none !important; 
-    }
-    * { 
-        cursor: auto !important; /* Restore normal touch behavior */
+/* ============================================================
+   RESPONSIVE DESIGN
+   Breakpoints: sm 420 | md 768 | lg 1024 | xl 1440
+   ============================================================ */
+
+/* --- TABLET (≤1024px) --- */
+@media (max-width: 1024px) {
+    .timeline-item {
+        grid-template-columns: 140px 1fr;
     }
 
-    /* 2. HERO SECTION */
-    .hero h1 { 
-        font-size: 10vw; /* Make text bigger on vertical screens */
-    }
-    .hero p {
-        font-size: 1.1rem;
-    }
-
-    /* 3. TIMELINE STACKING */
-    .timeline-item { 
-        flex-direction: column; 
-    }
-    .timeline-year { 
-        margin-bottom: 0.5rem; 
-        font-size: 1.5rem; /* Smaller year font */
-        width: 100%;
-    }
-    .timeline-content { 
-        width: 100%; 
-    }
-
-    /* 4. NAVIGATION FIXES */
-    nav {
-        padding: 1.5rem 5vw;
-    }
-    .nav-right { 
-        gap: 1rem; 
-    }
-    
-    /* Make the Back Button Icon bigger for thumbs */
-    .back-link { 
-        padding: 0.6rem; /* Bigger touch target */
-    }
-    .back-link svg { 
-        width: 20px; 
-        height: 20px; 
-    }
-    .back-link span { 
-        display: none; /* Hide text "Back to Main" on mobile to save space */
-    }
-
-    /* 5. HORIZONTAL SCROLL ADJUSTMENT */
-    /* Ensure the panels don't get cut off by browser address bars */
-    .panel {
-        height: 100dvh; /* "dvh" adapts to mobile address bars better than "vh" */
-    }
     .panel h2 {
-        font-size: 11vw; /* Adjust headline size */
+        font-size: clamp(2.5rem, 7vw, 7rem);
     }
+}
+
+/* --- MOBILE (≤768px) --- */
+@media (max-width: 768px) {
+
+    /* 1. RESTORE NATIVE CURSOR */
+    .cursor-dot, .cursor-outline { display: none !important; }
+    * { cursor: auto !important; }
+
+    /* 2. NAVIGATION */
+    nav { padding: 1rem var(--gutter); }
+    .logo { font-size: 1.1rem; }
+    .nav-right { gap: 0.75rem; }
+
+    .back-link { padding: 0.55rem 0.8rem; }
+    .back-link span { display: none; }
+    .back-link svg { width: 18px; height: 18px; }
+
+    /* 3. HERO */
+    .hero {
+        justify-content: flex-end;
+        padding-bottom: clamp(80px, 15vh, 130px);
+    }
+
+    .hero h1 {
+        font-size: clamp(2.8rem, 12vw, 5rem);
+        line-height: 0.9;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        margin-top: var(--space-s);
+    }
+
+    .hero::after { display: none; }
+
+    /* 4. TIMELINE — single column */
+    .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: var(--space-m) 0;
+    }
+
+    .timeline-year {
+        font-size: 1.1rem;
+        color: var(--accent-color);
+        opacity: 0.6;
+        padding-top: 0;
+    }
+
+    .timeline-content h3 { font-size: clamp(1.5rem, 6vw, 2.5rem); }
+    .timeline-content p { font-size: 0.95rem; }
+
+    /* 5. HORIZONTAL PANELS */
+    .horizontal-container { height: 100dvh; }
+
+    .panel {
+        height: 100dvh;
+        padding-bottom: clamp(3rem, 10vh, 6rem);
+        justify-content: center;
+    }
+
+    .panel h2 {
+        font-size: clamp(2.2rem, 11vw, 4rem);
+        margin-bottom: 0.75rem;
+    }
+
+    .panel p { font-size: 0.95rem; }
+
+    .panel-num { font-size: clamp(5rem, 30vw, 9rem); }
+
+    /* 6. FOOTER */
+    .footer-cta { font-size: clamp(2rem, 10vw, 3.5rem); }
+    .footer-link { font-size: 0.9rem; padding: 0.75rem 2rem; }
+
+    /* 7. SECTION TITLES */
+    .section-title { font-size: clamp(2rem, 9vw, 4rem); }
+}
+
+/* --- SMALL MOBILE (≤420px) --- */
+@media (max-width: 420px) {
+    .hero h1 { font-size: clamp(2.2rem, 13vw, 3rem); }
+    .timeline-content h3 { font-size: 1.4rem; }
+    .panel h2 { font-size: clamp(1.8rem, 12vw, 3rem); }
+}
+
+/* --- LARGE DESKTOP (≥1440px) --- */
+@media (min-width: 1440px) {
+    :root { --gutter: 7vw; }
+    .hero h1 { font-size: 8.5vw; }
+    .timeline-item { grid-template-columns: 200px 1fr; }
+    .panel p { font-size: 1.35rem; }
+}
+
+/* --- REDUCE MOTION (accessibility) --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* --- HIGH CONTRAST MODE --- */
+@media (forced-colors: active) {
+    .cursor-dot, .cursor-outline { display: none; }
+    * { cursor: auto !important; }
 }
