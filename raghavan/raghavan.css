@@ -221,7 +221,7 @@ footer {
 
     /* 2. HERO SECTION */
     .hero h1 { 
-        font-size: 11vw; /* Make text bigger on vertical screens */
+        font-size: 10vw; /* Make text bigger on vertical screens */
     }
     .hero p {
         font-size: 1.1rem;
