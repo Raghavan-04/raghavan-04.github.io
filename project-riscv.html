@@ -61,60 +61,69 @@
         <div class="project-container">
             <div class="content-block">
                 <h2>Project Overview</h2>
-                <p>Designed and verified a custom <strong>System-on-Chip (SoC)</strong> based on the RISC-V architecture, specifically optimized for high-fidelity audio processing. By utilizing a single-cycle datapath, the system ensures <strong>cycle-perfect determinism</strong>, eliminating the sample jitter commonly found in more complex pipelined processors.</p>
+                <p>Designed and verified a custom <strong>RV32IM System-on-Chip (SoC)</strong>, specifically optimized for real-time digital signal processing (DSP) and high-fidelity audio output. By implementing a hardware-accelerated multiplier and a deterministic single-cycle datapath, the system ensures <strong>cycle-perfect audio delivery</strong> without the sample jitter typical of complex OS-based processors.</p>
+
             </div>
 
             <div class="content-block">
                 <h2>The Challenge</h2>
-                <p>Standard OS-based audio processing suffers from non-deterministic latency caused by interrupts and context switching. To achieve high-fidelity output, the hardware must guarantee that audio samples are delivered to the PWM engine at precise intervals. My goal was to build a "Silicon-Up" solution where the hardware timer forces the CPU to prioritize audio updates via low-level hardware interrupts.</p>
+                <p>Digital audio requires strict timing; any latency in sample delivery causes audible distortion. Standard software-based math (like volume scaling) can take dozens of cycles, risking "audio lag". My goal was to build a "Silicon-Up" solution where the hardware handles the heavy lifting—multiplying signals and triggering interrupts at precise nanosecond intervals.</p>
+
+
             </div>
 
             <div class="content-block">
                 <h2>Technical Approach</h2>
                 
                 <h3>CPU Core & Interrupt Logic</h3>
-                <p>Implemented an <strong>RV32I Core</strong> in SystemVerilog. Key features include:</p>
+                <p>Implemented a custom core in SystemVerilog following the RISC-V specification. Key features include:</p>
                 <ul>
-                    <li><strong>Hardware Vector Table:</strong> CPU immediately jumps to <code>0x20</code> upon timer IRQ.</li>
-                    <li><strong>Context Saving:</strong> Integrated a Machine Exception Program Counter (MEPC) to resume background tasks seamlessly after audio interrupts.</li>
-                    <li><strong>Deterministic Execution:</strong> Single-cycle ALU ensures predictable instruction latency.</li>
+                    <li><strong>Hardware Vector Table:</strong> CPU performs a hardware-forced jump to <code>0x20</code> immediately upon timer IRQ.</li>
+                    <li><strong>Context Management:</strong> Integrated MEPC registers to resume background tasks seamlessly after audio interrupts.</li>
+                    <li><strong>Single-Cycle Determinism:</strong> Every instruction, including math, executes in exactly one clock cycle to ensure predictable timing.</li>
                 </ul>
+                
+                <h3>Hardware-Accelerated Math (M-Extension)</h3>
+                <p>Upgraded the ALU with a dedicated <strong>Hardware Multiplier</strong> unit. By shifting from software-based multiplication loops to dedicated hardware gates, I reduced multiplication latency from <strong>~32 cycles down to 1 cycle</strong>. This enables real-time volume scaling and audio mixing with zero CPU overhead.</p>
+                
 
                 <h3>Audio Peripheral Design</h3>
-                <p><strong>Audio PWM Engine:</strong> A custom 8-bit digital-to-analog pulse-width modulator that transforms PCM data into speaker-ready signals. It includes hardware-level saturation logic to prevent digital clipping distortion during high-volume transients.</p>
+                <p><strong>Audio PWM Engine:</strong> A custom 8-bit digital-to-analog modulator that transforms PCM data into speaker-ready pulses, featuring hardware-level saturation logic to prevent clipping.</p>
+
                 
-                <p><strong>Programmable Timer:</strong> Acts as the system's "Heartbeat," mapped to MMIO address <code>0x500</code>, allowing software to dynamically adjust the sample rate.</p>
+                <p><strong>Precision Timer:</strong> Acts as the system's "Heartbeat," mapped to MMIO address <code>0x500</code>, triggering interrupts exactly every 22 microseconds for 44.1kHz audio.</p>
             </div>
 
-            <div class="content-block">
-                <h2>The macOS Toolchain Mastery</h2>
-                <p>Built a professional verification environment on macOS using <strong>Verilator</strong> to transpile RTL into high-speed C++ models. Managed complex environment headers (SDKROOT) and automated the build flow with a custom Makefile system to generate VCD (Value Change Dump) files for nanosecond-level waveform debugging in <strong>GTKWave</strong>.</p>
+           <div class="content-block">
+                <h2>Verification & GTKWave Analysis</h2>
+                <p>Built a professional verification environment on macOS using <strong>Verilator</strong> to simulate the RTL at GHz speeds. I used <strong>GTKWave</strong> to verify nanosecond-level timing, confirming that the multiplier calculates products instantly the moment a timer interrupt occurs.</p>
+                
             </div>
 
             <div class="content-block highlight-block">
                 <h2>Key Results</h2>
                 <div class="results-grid">
                     <div class="result-item">
-                        <h3>Zero</h3>
-                        <p>Sample Jitter</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>100%</h3>
-                        <p>ISA Compliance</p>
-                    </div>
-                    <div class="result-item">
                         <h3>1-Cycle</h3>
-                        <p>IRQ Latency</p>
+                        <p>Math Latency</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>44.1kHz</h3>
+                        <p>Stable Sampling</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>RV32IM</h3>
+                        <p>ISA Compliance</p>
                     </div>
                 </div>
             </div>
 
             <div class="content-block">
                 <h2>Future Work</h2>
-                <ul>
-                    <li><strong>DSP Accelerators:</strong> Adding hardware-accelerated FFT/FIR filter blocks.</li>
-                    <li><strong>Physical Hardening:</strong> Implementing the OpenLane flow for Sky130 Tape-out.</li>
-                    <li><strong>Multi-Channel Audio:</strong> Expanding to I2S protocols for 7.1 surround support.</li>
+                 <ul>
+                    <li><strong>DMA Controller:</strong> Offloading audio data transfers from the CPU to dedicated hardware for lower power consumption.</li>
+                    <li><strong>Fixed-Point DSP:</strong> Updating the ALU to handle decimals for advanced reverb and EQ filters.</li>
+                    <li><strong>Physical Tape-out:</strong> Implementing the OpenLane flow for Sky130 silicon manufacturing.</li>
                 </ul>
             </div>
 
