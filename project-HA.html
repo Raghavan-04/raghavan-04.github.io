@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hardware Accelerator - RTL Architecture by Raghavan">
+    <title>Hardware Accelerator - Raghavan</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-page.css">
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBGDVXSWX7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-JBGDVXSWX7');
+    </script>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
+            <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <div class="menu-overlay"></div>
+        <ul class="nav-menu">             
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <a href="index.html#work" class="back-link">← Back to Projects</a>
+            <h1>Hardware Accelerator</h1>
+            <p class="project-meta">RTL Architecture • SystemVerilog • ASIC Design • 2025</p>
+            <div class="project-tags-hero">
+                <span class="tag">SystemVerilog</span>
+                <span class="tag">Datapath Design</span>
+                <span class="tag">Elastic Buffers</span>
+                <span class="tag">Digital Filtering</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-content-section">
+        <div class="project-container">
+            
+            <div class="content-block">
+                <h2>Project Overview</h2>
+                <p>This project is a basic <strong>Hardware Accelerator</strong> designed for high-performance arithmetic operations, specifically Multiply-Accumulate (MAC) functions often used in DSP or AI workloads. Architected from scratch in SystemVerilog, this hardware module operates independently of the main CPU. It utilizes an autonomous pipeline and elastic data buffering to achieve maximum computational density per clock cycle.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>The Engineering Bottleneck</h2>
+                <p>In digital signal processing, computing elements frequently face "data starvation" when memory fetching cannot keep up with execution speeds. Furthermore, deep accumulation loops in standard ALUs are prone to integer overflow, leading to catastrophic phase inversion in audio or corrupted weights in AI models. This project was built to solve both the memory-compute impedance mismatch and arithmetic instability simultaneously.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>Architectural Deep Dive</h2>
+                
+                <h3>Elastic Operand Buffering (Sync FIFO)</h3>
+                <p>Designed a dual-buffer system to decouple data ingestion from the processing core.</p>
+                <ul>
+                    <li><strong>Optimized State Logic:</strong> Utilized <i>n</i>+1 bit addressing for read/write pointers. This allows the hardware to calculate "Full" and "Empty" states purely through bitwise comparison, eliminating the need for slow, area-heavy resource counters.</li>
+                    <li><strong>Synchronized Dispatch:</strong> Operands A and B stream asynchronously but are perfectly aligned by the top-level controller before being dispatched into the MAC datapath.</li>
+                </ul>
+                
+                <h3>2-Stage Saturated MAC Engine</h3>
+                <p>The core computational unit, stripped down for maximum frequency scaling.</p>
+                <ul>
+                    <li><strong>Pipeline Segregation:</strong> Divided the math into two distinct stages (Cycle 1: Multiplier Array, Cycle 2: Accumulator) to shorten the critical path and boost the maximum achievable clock frequency (F<sub>max</sub>).</li>
+                    <li><strong>Hardware-Level Clipping:</strong> Integrated custom saturation logic. Instead of rolling over, values that exceed the 32-bit signed limit are clamped to <code>MAX_POS</code> or <code>MAX_NEG</code>, ensuring mathematically stable output streams.</li>
+                </ul>
+
+                <h3>Autonomous Pipeline Control</h3>
+                <p>The top-level wrapper acts as a micro-sequencer. It autonomously drives the datapath enable signals based purely on buffer occupancy. A synchronous shift-register tracks data through the pipeline, asserting the output <code>valid</code> flag exactly aligned with the 2-cycle algorithmic latency.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>Testbench Verification</h2>
+                <p>Developed a rigorous simulation environment to prove the logic. The test suite heavily stressed the saturation boundaries, intentionally flooding the accumulator with edge-case limits (e.g., <code>0x7FFFFFFF + 0x7FFFFFFF</code>) to verify that the clamping mechanisms triggered perfectly without stalling the pipeline throughput.</p>
+            </div>
+
+            <div class="content-block highlight-block">
+                <h2>Performance Metrics</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h3>1 Op/Cycle</h3>
+                        <p>Sustained Throughput</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Zero</h3>
+                        <p>CPU Overhead</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>100%</h3>
+                        <p>Overflow Immune</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Roadmap & Evolution</h2>
+                 <ul>
+                    <li><strong>AMBA AXI4 Integration:</strong> Transitioning the raw FIFO inputs to standard AXI4-Stream interfaces for plug-and-play capability with ARM Cortex cores.</li>
+                    <li><strong>UVM Verification:</strong> Upgrading the standard SystemVerilog testbench to a full Universal Verification Methodology (UVM) environment with constrained random testing.</li>
+                </ul>
+            </div>
+
+             <div class="content-block" style="text-align: center; margin-top: 40px;">
+                <a href="#" class="nav-btn-center" style="display: inline-block; padding: 15px 30px; border: 1px solid #000; text-decoration: none; color: #000; transition: background 0.3s, color 0.3s;">View Source Code</a>
+            </div>
+
+            <div class="project-navigation">
+                <a href="project-audio-soc.html" class="nav-btn">← Previous Project</a>
+                <a href="index.html#work" class="nav-btn-center">All Projects</a>
+                <a href="project-oncowise.html" class="nav-btn">Next Project →</a>
+            </div>
+            
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Raghavan. Built with Silicon Precision & RTL Innovation.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
