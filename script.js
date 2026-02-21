@@ -3,25 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Contact form submission
     const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+
+        if (!name || !email || !subject || !message) {
             e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            // Simple validation
-            if (name && email && subject && message) {
-                alert(`Thank you for reaching out, ${name}! I'll get back to you at ${email} soon.`);
-                contactForm.reset();
-            } else {
-                alert('Please fill in all fields.');
-            }
-        });
-    }
+            alert('Please fill in all fields.');
+        }
+    });
+}
     
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
