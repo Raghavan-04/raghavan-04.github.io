@@ -6,16 +6,13 @@
     <meta name="description" content="Quantum Circuit Simulator - Quantum Computing Project by Raghavan">
     <title>Quantum Circuit Simulator - Raghavan</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="project-page.css">
     
-    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBGDVXSWX7"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -23,14 +20,21 @@
         gtag('js', new Date());
         gtag('config', 'G-JBGDVXSWX7');
     </script>
-   
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="container">
             <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
-            <ul>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="menu-overlay"></div>
+            
+            <ul class="nav-menu">
                 <li><a href="index.html#work">Work</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#blog">Blog</a></li>
@@ -39,7 +43,6 @@
         </div>
     </nav>
 
-    <!-- Project Hero -->
     <section class="project-hero">
         <div class="project-hero-content">
             <a href="index.html#work" class="back-link">← Back to Projects</a>
@@ -54,16 +57,13 @@
         </div>
     </section>
 
-    <!-- Project Content -->
     <section class="project-content-section">
         <div class="project-container">
-            <!-- Overview -->
             <div class="content-block">
                 <h2>Project Overview</h2>
                 <p>Developed a comprehensive Python-based quantum circuit simulator from scratch, implementing fundamental quantum gates, state vector manipulation, and visualization tools. The simulator supports famous quantum algorithms including Grover's search and Shor's factorization, providing both educational value and practical testing capabilities for quantum algorithm development.</p>
             </div>
 
-            <!-- Challenge -->
             <div class="content-block">
                 <h2>The Challenge</h2>
                 <p>Understanding quantum computing requires hands-on experience with quantum circuits, but access to real quantum hardware is limited and expensive. Existing simulators often abstract away crucial implementation details, making it difficult to truly understand quantum mechanics at the gate level. The goal was to build a simulator that:</p>
@@ -75,7 +75,6 @@
                 </ul>
             </div>
 
-            <!-- Solution -->
             <div class="content-block">
                 <h2>Technical Approach</h2>
                 
@@ -105,7 +104,6 @@
                 </ul>
             </div>
 
-            <!-- Implementation -->
             <div class="content-block">
                 <h2>Implementation Details</h2>
                 
@@ -137,7 +135,6 @@
                 </ul>
             </div>
 
-            <!-- Results -->
             <div class="content-block highlight-block">
                 <h2>Results & Impact</h2>
                 <div class="results-grid">
@@ -161,7 +158,6 @@
                 <p style="margin-top: 2rem;">The simulator has been used in educational settings to teach quantum computing fundamentals and has been validated against IBM Qiskit for accuracy. All implemented algorithms produce correct results matching theoretical predictions, with execution times suitable for interactive exploration and algorithm development.</p>
             </div>
 
-            <!-- Technologies -->
             <div class="content-block">
                 <h2>Technologies & Tools</h2>
                 <div class="tech-grid">
@@ -192,7 +188,6 @@
                 </div>
             </div>
 
-            <!-- Learnings -->
             <div class="content-block">
                 <h2>Key Learnings</h2>
                 <ul>
@@ -205,7 +200,6 @@
                 </ul>
             </div>
 
-            <!-- Future Work -->
             <div class="content-block">
                 <h2>Future Enhancements</h2>
                 <ul>
@@ -219,8 +213,7 @@
                 </ul>
             </div>
 
-            <!-- Navigation -->
-               <div class="project-navigation">
+            <div class="project-navigation">
                 <a href="project-HA.html" class="nav-btn">← Previous Project</a>
                 <a href="index.html#work" class="nav-btn-center">All Projects</a>
                 <a href="project-riscv.html" class="nav-btn">Next Project →</a>
@@ -228,9 +221,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-       
         <p>&copy; 2026 Raghavan. All rights reserved.</p>
     </footer>
 
