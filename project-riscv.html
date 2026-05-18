@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Custom RISC-V Audio SoC - RTL Design & Verification by Raghavan">
+    <meta name="description" content="Custom RISC-V Audio SoC with AMBA Interconnect - RTL Design & Verification by Raghavan">
     <title>Custom Audio SoC RISC-V - Raghavan</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="project-page.css">
       
-    
-    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBGDVXSWX7"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -29,13 +27,13 @@
         <div class="container">
             <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
             <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
 
-        <div class="menu-overlay"></div>
-        <ul class="nav-menu">             
+            <div class="menu-overlay"></div>
+            <ul class="nav-menu">             
                 <li><a href="index.html#work">Work</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
@@ -46,13 +44,14 @@
     <section class="project-hero">
         <div class="project-hero-content">
             <a href="index.html#work" class="back-link">← Back to Projects</a>
-            <h1>Custom Audio SoC (RV32IM) </h1>
-            <p class="project-meta">RTL Design • Hardware-Software Co-Design • SoC Architecture • 2026</p>
+            <h1>Custom Audio SoC (RV32IM)</h1>
+            <p class="project-meta">RTL Design • AMBA Fabric Architecture • Hardware-Software Co-Design • 2026</p>
             <div class="project-tags-hero">
                 <span class="tag">SystemVerilog</span>
-                <span class="tag">RV32IM ISA</span>
+                <span class="tag">AMBA Interconnect</span>
+                <span class="tag">AXI4-Lite & APB</span>
                 <span class="tag">Verilator</span>
-                <span class="tag">Bare-Metal ASM</span>
+                <span class="tag">OpenLane Flow</span>
             </div>
         </div>
     </section>
@@ -61,59 +60,62 @@
         <div class="project-container">
             <div class="content-block">
                 <h2>Project Overview</h2>
-                <p>Designed and verified a custom <strong>RV32IM System-on-Chip (SoC)</strong>, specifically optimized for real-time digital signal processing (DSP) and high-fidelity audio output. By implementing a hardware-accelerated multiplier and a deterministic single-cycle datapath, the system ensures <strong>cycle-perfect audio delivery</strong> without the sample jitter typical of complex OS-based processors.</p>
-
+                <p>Designed and verified a complete, production-grade <strong>RV32IM System-on-Chip (SoC)</strong> optimized for real-time, high-fidelity digital audio processing. By decoupling the processor from memory-mapped blocks using a custom <strong>AMBA Bus Subsystem</strong>, an on-chip <strong>1KB Data SRAM</strong>, and a single-cycle execution multiplier, this hardware architecture eliminates micro-timing drift and ensures rock-solid, jitter-free signal delivery.</p>
             </div>
 
             <div class="content-block">
                 <h2>The Challenge</h2>
-                <p>Digital audio requires strict timing; any latency in sample delivery causes audible distortion. Standard software-based math (like volume scaling) can take dozens of cycles, risking "audio lag". My goal was to build a "Silicon-Up" solution where the hardware handles the heavy lifting—multiplying signals and triggering interrupts at precise nanosecond intervals.</p>
-
-
+                <p>High-fidelity audio streaming leaves zero room for timing inconsistencies; variations in sample deployment intervals cause severe acoustic clipping and audible noise. Standard processors often suffer from irregular software calculation times and non-deterministic bus contentions. My objective was to eliminate this bottleneck from the ground up by building an integrated silicon fabric where real-time math operations, crossbar bus handshakes, and peripheral clock sweeps align perfectly within fixed execution windows.</p>
             </div>
 
             <div class="content-block">
-                <h2>Technical Approach</h2>
+                <h2>Technical Approach & Architecture</h2>
                 
-                <h3>CPU Core & Interrupt Logic</h3>
-                <p>Implemented a custom core in SystemVerilog following the RISC-V specification. Key features include:</p>
+                <h3>1. Processor Core & Custom Math Acceleration</h3>
+                <p>Implemented a deterministic, single-cycle (CPI = 1.0) RISC-V core in SystemVerilog. To satisfy the performance demands of intensive audio filtering and gain scaling, I upgraded the ALU with a dedicated <strong>Hardware Multiplier Macro Array (M-Extension)</strong>. This layout modification dropped 32-bit math delays from approximately 32 clock cycles in software emulation routines down to <strong>1 clock cycle</strong>, maximizing processing margins during active sample intervals.</p>
+                
+                <h3>2. Centralized AMBA Interconnect Matrix</h3>
+                <p>Replaced the brittle, ad-hoc wiring of earlier iterations with a standardized <strong>AMBA AXI4-Lite Router Matrix</strong> (<code>axi_router.sv</code>). The CPU core interacts seamlessly with the rest of the chip through a single, unified master interface, utilizing structured valid/ready handshake signals to eliminate routing contentions across independent subsystem addresses.</p>
+
+                <h3>3. Multi-Protocol APB Sub-Bus & Peripheral Bridge</h3>
+                <p>To reduce silicon gate counts and structural layout power usage, I designed an <strong>AXI4-Lite to AMBA APB Protocol Bridge</strong> directly within the top-level netlist. High-speed core requests targeting control spaces are captured and scaled down into simple, low-power APB setup and access phases (<code>psel</code>, <code>penable</code>) to govern slow peripheral nodes:</p>
                 <ul>
-                    <li><strong>Hardware Vector Table:</strong> CPU performs a hardware-forced jump to <code>0x20</code> immediately upon timer IRQ.</li>
-                    <li><strong>Context Management:</strong> Integrated MEPC registers to resume background tasks seamlessly after audio interrupts.</li>
-                    <li><strong>Single-Cycle Determinism:</strong> Every instruction, including math, executes in exactly one clock cycle to ensure predictable timing.</li>
+                    <li><strong>Native APB Timer (<code>timer_apb.sv</code>):</strong> Serves as the system heartbeat. It monitors internal clock counts to assert an explicit, high-priority hardware Interrupt Request (IRQ) precisely every 22 microseconds, locking the processor into a stable 44.1 kHz sampling gate.</li>
+                    <li><strong>APB GPIO Controller (<code>gpio_apb.sv</code>):</strong> An 8-bit memory-mapped control port that pipes core register data out to physical external boundaries for driving diagnostic indicators or tracking internal processing states.</li>
                 </ul>
-                
-                <h3>Hardware-Accelerated Math (M-Extension)</h3>
-                <p>Upgraded the ALU with a dedicated <strong>Hardware Multiplier</strong> unit. By shifting from software-based multiplication loops to dedicated hardware gates, I reduced multiplication latency from <strong>~32 cycles down to 1 cycle</strong>. This enables real-time volume scaling and audio mixing with zero CPU overhead.</p>
-                
 
-                <h3>Audio Peripheral Design</h3>
-                <p><strong>Audio PWM Engine:</strong> A custom 8-bit digital-to-analog modulator that transforms PCM data into speaker-ready pulses, featuring hardware-level saturation logic to prevent clipping.</p>
-
-                
-                <p><strong>Precision Timer:</strong> Acts as the system's "Heartbeat," mapped to MMIO address <code>0x500</code>, triggering interrupts exactly every 22 microseconds for 44.1kHz audio.</p>
+                <h3>4. High-Speed Audio PWM Engine & Wavetable SRAM</h3>
+                <p>Sound generation is handled via a protocol-compliant AXI subordinate <strong>Audio PWM Engine</strong> which converts incoming PCM sample values into balanced, high-speed electrical pulses to directly drive standard speaker circuits. To enable polyphonic tone modeling and instrument simulation, I integrated an on-chip <strong>1KB Synchronous AXI Data SRAM</strong> (<code>data_sram_axi.sv</code>). This cache serves as a reliable space for storing complex audio wavetable arrays, verified via low-level RISC-V assembly routines.</p>
             </div>
 
-           <div class="content-block">
-                <h2>Verification & GTKWave Analysis</h2>
-                <p>Built a professional verification environment on macOS using <strong>Verilator</strong> to simulate the RTL at GHz speeds. I used <strong>GTKWave</strong> to verify nanosecond-level timing, confirming that the multiplier calculates products instantly the moment a timer interrupt occurs.</p>
-                
+            <div class="content-block">
+                <h2>Verification & Waveform Analysis</h2>
+                <p>Compiled the SystemVerilog source files into a cycle-accurate C++ simulation model using <strong>Verilator</strong> to validate system logic loops at gigahertz speeds on macOS. Monitored real-time bus transactions using <strong>GTKWave</strong> to observe data shifts across the interconnect fabric. Waveform inspection verified that the AXI router accurately decodes peripheral addresses, the protocol bridge properly sequences APB control lines, and the hardware multiplier consistently settles multi-bit math products within a single clock cycle.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>ASIC Physical Design Pipeline</h2>
+                <p>Passed the complete, lint-checked front-end design files through the automated open-source <strong>OpenLane RTL-to-GDSII Physical Design Flow</strong>. Utilizing the open-source <strong>SkyWater 130nm PDK</strong> standard-cell libraries, the backend environment successfully performed automated logic synthesis, chip floorplanning, clock tree synthesis (CTS), and optimization routines to reach complete setup/hold timing closure for the custom layout.</p>
             </div>
 
             <div class="content-block highlight-block">
-                <h2>Key Results</h2>
+                <h2>Key Project Results</h2>
                 <div class="results-grid">
                     <div class="result-item">
                         <h3>1-Cycle</h3>
                         <p>Math Latency</p>
                     </div>
                     <div class="result-item">
-                        <h3>44.1kHz</h3>
-                        <p>Stable Sampling</p>
+                        <h3>AMBA Fabric</h3>
+                        <p>Standardized Bus Architecture</p>
                     </div>
                     <div class="result-item">
-                        <h3>RV32IM</h3>
-                        <p>ISA Compliance</p>
+                        <h3>44.1kHz</h3>
+                        <p>Jitter-Free Sampling Rate</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>1KB SRAM</h3>
+                        <p>Wavetable Cache Storage</p>
                     </div>
                 </div>
             </div>
@@ -121,8 +123,8 @@
             <div class="content-block">
                 <h2>Future Work</h2>
                  <ul>
-                    <li><strong>DMA Controller:</strong> Offloading audio data transfers from the CPU to dedicated hardware for lower power consumption.</li>
-                    <li><strong>Fixed-Point DSP:</strong> Updating the ALU to handle decimals for advanced reverb and EQ filters.</li>
+                    <li><strong>DMA Controller:</strong> Implementing an autonomous Direct Memory Access block to pass wavetable streams between the SRAM cache and the Audio PWM peripheral without consuming active CPU cycles.</li>
+                    <li><strong>Fixed-Point DSP Blocks:</strong> Expanding the arithmetic decoder pipeline to natively support fractions and signed decimals for complex echo and multi-band equalizer filtering.</li>
                 </ul>
             </div>
 
@@ -139,10 +141,8 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 Raghavan. Built with Silicon Precision & RTL Innovation.</p>
+        <p>&copy; 2026 Raghavan. Architected with Silicon Precision & Centralized Bus Innovation.</p>
     </footer>
     <script src="script.js"></script>
-</body>
-</html>
 </body>
 </html>
