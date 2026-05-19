@@ -393,3 +393,6 @@
         margin: 2rem 0;
     }
 }
+.result-item h3 {
+    font-size: clamp(1.2rem, 2vw, 1.8rem); /* Fluidly resizes text based on viewport width */
+}
