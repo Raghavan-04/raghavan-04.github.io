@@ -71,11 +71,13 @@
                     <div class="project-image">⚡</div>
                     <div class="project-content">
                         <h3>Custom Audio SoC (RV32IM)</h3>
-                        <p>Architected and verified a custom RV32IM SoC optimized for low-latency DSP and precision audio rendering. Incorporated a hardware multiplier and deterministic single-cycle execution pipeline to achieve cycle-accurate sample scheduling, thereby removing timing jitter inherent in multitasking OS-based systems. </p>
+                        <p>Architected and verified a production-grade RV32IM SoC featuring a centralized AMBA interconnect fabric and custom hardware accelerators. Integrates a 1-cycle ALU multiplier for real-time DSP, an on-chip 1KB Data SRAM for polyphonic wavetable lookups, and an AXI-to-APB bridge subsystem driving low-power timer and GPIO peripherals. Fully verified via cycle-accurate Verilator simulations and physical design layout closures.</p>
                         <div class="project-tags">
-                            <span class="tag">VLSI</span>
-                            <span class="tag">Verilog</span>
-                            <span class="tag">RTL Design</span>
+                            <span class="tag">SystemVerilog</span>
+                            <span class="tag">AMBA (AXI/APB)</span>
+                            <span class="tag">Verilator / SVA</span>
+                            <span class="tag">OpenLane ASIC</span>
+
                         </div>
                     </div>
                 </div>
