@@ -67,7 +67,19 @@
                 <h2>The Challenge</h2>
                 <p>High-fidelity audio streaming leaves zero room for timing inconsistencies; variations in sample deployment intervals cause severe acoustic clipping and audible noise. Standard processors often suffer from irregular software calculation times and non-deterministic bus contentions. My objective was to eliminate this bottleneck from the ground up by building an integrated silicon fabric where real-time math operations, crossbar bus handshakes, and peripheral clock sweeps align perfectly within fixed execution windows.</p>
             </div>
-
+<div class="content-block">
+    <h2>Architectural Design Optimizations</h2>
+    <p>Rather than relying on a generic, all-purpose CPU design, this SoC features targeted hardware-software co-design optimizations specifically engineered to meet the strict demands of real-time acoustic processing:</p>
+    
+    <ul>
+        <li>
+            <strong>Hardware-Accelerated DSP Core:</strong> Standard RISC-V integer pipelines calculate multi-bit multiplication iteratively via software shift-and-add routines, introducing severe clock-cycle penalties. By embedding a dedicated single-cycle hardware multiplier macro array directly into the ALU's execution path, arithmetic signal processing latency was slashed by 93%, enabling dense real-time filter computations.
+        </li>
+        <li>
+            <strong>Synchronous Embedded Memory Matrix:</strong> Emulating traditional FPGA Block RAM (BRAM) architectures, a synchronous 1KB Data SRAM core was integrated directly into the centralized AMBA interconnect. This provides the processor with localized, low-latency storage space to run rapid wavetable lookups, completely isolating intensive signal modulation data from the primary instruction stream.
+        </li>
+    </ul>
+</div>
             <div class="content-block">
                 <h2>Technical Approach & Architecture</h2>
                 
@@ -89,6 +101,70 @@
             </div>
 
             <div class="content-block">
+                <h2>SoC Memory-Mapped Address Spaces</h2>
+                <p>Communication within the SoC is structured around a centralized memory map, allowing unified peripheral interaction without routing conflicts:</p>
+                <div style="overflow-x: auto; margin-top: 20px;">
+                    <table style="width:100%; border-collapse: collapse; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #000; font-family: 'Playfair Display', serif;">
+                                <th style="padding: 10px;">Subsystem</th>
+                                <th style="padding: 10px;">Protocol</th>
+                                <th style="padding: 10px;">Address Range</th>
+                                <th style="padding: 10px;">Register Bit Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">Audio PWM</td>
+                                <td style="padding: 10px;">AXI4-Lite (Slot 0)</td>
+                                <td style="padding: 10px;"><code>0x0000_0400</code></td>
+                                <td style="padding: 10px;">Bits [7:0]: Pulse duty sample registry. Bits [31:8]: Hardwired to 0.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">System Timer</td>
+                                <td style="padding: 10px;">AMBA APB (Slot 2)</td>
+                                <td style="padding: 10px;"><code>0x0000_0500</code></td>
+                                <td style="padding: 10px;">Bits [31:0]: Real-time countdown load value (Default: 1100 cycles).</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">GPIO Ports</td>
+                                <td style="padding: 10px;">AMBA APB (Slot 2)</td>
+                                <td style="padding: 10px;"><code>0x0000_0600</code></td>
+                                <td style="padding: 10px;">Bits [7:0]: Active output pins. Bits [31:8]: Reserved.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">Data SRAM</td>
+                                <td style="padding: 10px;">AXI4-Lite (Slot 1)</td>
+                                <td style="padding: 10px;"><code>0x0000_1000 - 0x13FF</code></td>
+                                <td style="padding: 10px;">1KB storage footprint for volatile wavetable synthesis parameters.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Protocol Verification via SystemVerilog Assertions (SVA)</h2>
+                <p>To validate protocol accuracy across the AXI and APB boundaries, concurrent assertions were designed to verify bus stability and prevent illegal states during dynamic traffic switches:</p>
+                
+                <h4 style="margin-top: 20px; font-family: 'Playfair Display', serif;">AXI4-Lite Address Stability Guarantee</h4>
+                <pre style="background: #f4f4f4; padding: 15px; border-left: 3px solid #000; font-family: 'JetBrains Mono', monospace; overflow-x: auto; font-size: 0.85em;">
+<span style="color: #008800; font-weight: bold;">property</span> p_axi_address_stability;
+    <span style="color: #000088; font-weight: bold;">@</span>(<span style="color: #000088; font-weight: bold;">posedge</span> clk) <span style="color: #000088; font-weight: bold;">disable iff</span> (!rst_n)
+    (m_axi_awvalid && !m_axi_awready) <span style="color: #000088; font-weight: bold;">|=&gt;</span> (m_axi_awvalid && <span style="color: #000088; font-weight: bold;">$stable</span>(m_axi_awaddr));
+<span style="color: #008800; font-weight: bold;">endproperty</span>
+assert_axi_address_stability: <span style="color: #000088; font-weight: bold;">assert property</span> (p_axi_address_stability);</pre>
+
+                <h4 style="margin-top: 20px; font-family: 'Playfair Display', serif;">AMBA APB Sequence Order Check</h4>
+                <pre style="background: #f4f4f4; padding: 15px; border-left: 3px solid #000; font-family: 'JetBrains Mono', monospace; overflow-x: auto; font-size: 0.85em;">
+<span style="color: #008800; font-weight: bold;">property</span> p_apb_enable_sequence;
+    <span style="color: #000088; font-weight: bold;">@</span>(<span style="color: #000088; font-weight: bold;">posedge</span> pclk) <span style="color: #000088; font-weight: bold;">disable iff</span> (!presetn)
+    (<span style="color: #000088; font-weight: bold;">$rose</span>(apb_penable)) <span style="color: #000088; font-weight: bold;">|-&gt;</span> (apb_psel);
+<span style="color: #008800; font-weight: bold;">endproperty</span>
+assert_apb_enable_sequence: <span style="color: #000088; font-weight: bold;">assert property</span> (p_apb_enable_sequence);</pre>
+            </div>
+
+            <div class="content-block">
                 <h2>Verification & Waveform Analysis</h2>
                 <p>Compiled the SystemVerilog source files into a cycle-accurate C++ simulation model using <strong>Verilator</strong> to validate system logic loops at gigahertz speeds on macOS. Monitored real-time bus transactions using <strong>GTKWave</strong> to observe data shifts across the interconnect fabric. Waveform inspection verified that the AXI router accurately decodes peripheral addresses, the protocol bridge properly sequences APB control lines, and the hardware multiplier consistently settles multi-bit math products within a single clock cycle.</p>
             </div>
@@ -106,9 +182,8 @@
                         <p>Math Latency</p>
                     </div>
                     <div class="result-item">
-                        <h3>AMBA Interconnect</h3>
-                        <p>Standardized Bus Architecture</p>
-                    </div>
+    <h3>AMBA<br>Interconnect</h3> <p>Standardized Bus Architecture</p>
+</div>
                     <div class="result-item">
                         <h3>44.1kHz</h3>
                         <p>Jitter-Free Sampling Rate</p>
