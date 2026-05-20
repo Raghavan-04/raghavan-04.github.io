@@ -146,7 +146,54 @@
                     </table>
                 </div>
             </div>
-
+<div class="content-block">
+    <h2>ASIC Physical Implementation & Timing Sign-Off</h2>
+    <p>The layout netlist was fully synthesized, floorplanned, and routed using the automated OpenLane RTL-to-GDSII backend pipeline. Physical layout rule verification and clock tree synthesis closure achieved optimal design-rule check boundaries under worst-case parameters:</p>
+    
+    <div style="overflow-x: auto; margin-top: 20px;">
+        <table style="width:100%; border-collapse: collapse; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">
+            <thead>
+                <tr style="border-bottom: 2px solid #000; font-family: 'Playfair Display', serif;">
+                    <th style="padding: 10px;">Backend Sizing Parameter</th>
+                    <th style="padding: 10px;">Sign-Off Metric Value</th>
+                    <th style="padding: 10px;">Verification Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">Total Realized Die Area</td>
+                    <td style="padding: 10px;">0.0637 mm² (~0.25mm × 0.25mm)</td>
+                    <td style="padding: 10px; color: green; font-weight: bold;">✓ Optimized Packing</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">Total Component Placement Count</td>
+                    <td style="padding: 10px;">7,336 Cells (2,691 Pure Logic Gates)</td>
+                    <td style="padding: 10px; color: green; font-weight: bold;">✓ Legalized</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">Worst Negative Slack (WNS)</td>
+                    <td style="padding: 10px;">0.00 ns (Target Clock: 50.0 MHz)</td>
+                    <td style="padding: 10px; color: green; font-weight: bold;">✓ Timing Closed</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">Critical Path Data Propagation</td>
+                    <td style="padding: 10px;">6.45 ns (Required Ceiling: 20.43 ns)</td>
+                    <td style="padding: 10px; color: green; font-weight: bold;">✓ 13.98ns Slack Margin</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">Design Rule Check (Magic DRC)</td>
+                    <td style="padding: 10px;">0 Geometrical Violations</td>
+                    <td style="padding: 10px; color: green; font-weight: bold;">✓ Manufacturing Clean</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">Layout vs. Schematic (LVS Match)</td>
+                    <td style="padding: 10px;">0 Discrepancies (3,314 Nets Matched)</td>
+                    <td style="padding: 10px; color: green; font-weight: bold;">✓ 1-to-1 Netlist Pass</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
             <div class="content-block">
                 <h2>Protocol Verification via SystemVerilog Assertions (SVA)</h2>
                 <p>To validate protocol accuracy across the AXI and APB boundaries, concurrent assertions were designed to verify bus stability and prevent illegal states during dynamic traffic switches:</p>
@@ -183,11 +230,19 @@ assert_apb_enable_sequence: <span style="color: #000088; font-weight: bold;">ass
                 <div class="results-grid">
                     <div class="result-item">
                         <h3>1-Cycle</h3>
-                        <p>Math Latency</p>
+                        <p>Arithmetic DSP Math Latency</p>
                     </div>
                     <div class="result-item">
     <h3>AMBA<br>Interconnect</h3> <p>Standardized Bus Architecture</p>
 </div>
+                    <div class="result-item">
+            <h3>0 DRC/LVS</h3>
+            <p>Physical Manufacturing Flaws</p>
+        </div>
+                    <div class="result-item">
+            <h3>50 MHz</h3>
+            <p>Timing-Closed Core Frequency</p>
+        </div>
                     <div class="result-item">
                         <h3>44.1kHz</h3>
                         <p>Jitter-Free Sampling Rate</p>
@@ -196,6 +251,10 @@ assert_apb_enable_sequence: <span style="color: #000088; font-weight: bold;">ass
                         <h3>1KB SRAM</h3>
                         <p>Wavetable Cache Storage</p>
                     </div>
+                    <div class="result-item">
+            <h3>0.063 mm²</h3>
+            <p>Ultra-Compact Silicon Footprint</p>
+        </div>
                 </div>
             </div>
 
