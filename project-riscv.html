@@ -99,6 +99,10 @@
                 <h3>4. High-Speed Audio PWM Engine & Wavetable SRAM</h3>
                 <p>Sound generation is handled via a protocol-compliant AXI subordinate <strong>Audio PWM Engine</strong> which converts incoming PCM sample values into balanced, high-speed electrical pulses to directly drive standard speaker circuits. To enable polyphonic tone modeling and instrument simulation, I integrated an on-chip <strong>1KB Synchronous AXI Data SRAM</strong> (<code>data_sram_axi.sv</code>). This cache serves as a reliable space for storing complex audio wavetable arrays, verified via low-level RISC-V assembly routines.</p>
             </div>
+            <div class="project-image-wrapper" style="margin: 40px 0; text-align: center;">
+    <img src="./docs/audio_soc_pdn_mesh.png" alt="ASIC Power Grid Mesh Layout Topography" style="max-width: 100%; height: auto; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 10px; color: #555;">Figure 1: Complete Core Physical Topography exhibiting wide vertical periphery straps on Metal 4 (met4) and interlocking horizontal distribution rows across the cell array.</p>
+</div>
 
             <div class="content-block">
                 <h2>SoC Memory-Mapped Address Spaces</h2>
