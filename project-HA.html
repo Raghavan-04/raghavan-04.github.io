@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hardware Accelerator - RTL Architecture by Raghavan">
-    <title>Hardware Accelerator - Raghavan</title>
+    <meta name="description" content="4-Lane Parallel SIMD Vector Core Processor - RTL Architecture by Raghavan">
+    <title>4-Lane Parallel SIMD Vector Processor - Raghavan</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,13 +27,13 @@
         <div class="container">
             <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
             <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
 
-        <div class="menu-overlay"></div>
-        <ul class="nav-menu">             
+            <div class="menu-overlay"></div>
+            <ul class="nav-menu">              
                 <li><a href="index.html#work">Projects</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
@@ -44,13 +44,14 @@
     <section class="project-hero">
         <div class="project-hero-content">
             <a href="index.html#work" class="back-link">← Back to Projects</a>
-            <h1>Hardware Accelerator</h1>
-            <p class="project-meta">RTL Architecture • SystemVerilog • ASIC Design • 2025</p>
+            <h1>4-Lane Parallel SIMD Vector Processor</h1>
+            <p class="project-meta">RTL Architecture • SystemVerilog • C++ Co-Simulation • 2026</p>
             <div class="project-tags-hero">
                 <span class="tag">SystemVerilog</span>
-                <span class="tag">Datapath Design</span>
-                <span class="tag">Elastic Buffers</span>
-                <span class="tag">Digital Filtering</span>
+                <span class="tag">SIMD Vector Compute</span>
+                <span class="tag">C++ Co-Simulation</span>
+                <span class="tag">Valid/Ready Handshake</span>
+                <span class="tag">ASIC Flow Compatibility</span>
             </div>
         </div>
     </section>
@@ -60,54 +61,58 @@
             
             <div class="content-block">
                 <h2>Project Overview</h2>
-                <p>This project is a basic <strong>Hardware Accelerator</strong> designed for high-performance arithmetic operations, specifically Multiply-Accumulate (MAC) functions often used in DSP or AI workloads. Architected from scratch in SystemVerilog, this hardware module operates independently of the main CPU. It utilizes an autonomous pipeline and elastic data buffering to achieve maximum computational density per clock cycle.</p>
+                <p>This project features a high-performance, <strong>4-Lane SIMD (Single Instruction, Multiple Data) Vector Core Processor</strong> engineered for high-density, low-latency parallel matrix math routines (e.g., edge AI inference processing loops and multi-channel digital signal filtering). Designed completely from scratch in SystemVerilog, the architecture embraces an industrial hybrid-precision topology—utilizing packed 32-bit streaming data streams carrying four 8-bit components to maximize bus efficiency, while accumulating into sign-extended 32-bit registers to guarantee perfect mathematical precision.</p>
             </div>
 
             <div class="content-block">
                 <h2>The Engineering Bottleneck</h2>
-                <p>In digital signal processing, computing elements frequently face "data starvation" when memory fetching cannot keep up with execution speeds. Furthermore, deep accumulation loops in standard ALUs are prone to integer overflow, leading to catastrophic phase inversion in audio or corrupted weights in AI models. This project was built to solve both the memory-compute impedance mismatch and arithmetic instability simultaneously.</p>
+                <p>In high-throughput vector processing, computational paths frequently face "data starvation" or system stalls due to rigid timing dependencies and memory imbalances. Furthermore, traditional linear data streams consume massive bus bandwidth without optimizing parallel execution. On the arithmetic layer, deep accumulation loops are inherently vulnerable to integer wrap-around errors, which can completely corrupt machine learning weights or introduce severe audio noise spikes. This processor scales past these limits by combining spatial hardware parallelism with strict flow control and robust saturation clipping rules.</p>
             </div>
 
             <div class="content-block">
                 <h2>Architectural Deep Dive</h2>
                 
-                <h3>Elastic Operand Buffering (Sync FIFO)</h3>
-                <p>Designed a dual-buffer system to decouple data ingestion from the processing core.</p>
+                <h3>Spatial Vector Parallelism & Slicing</h3>
+                <p>The top-level core natively accepts a packed 32-bit vector bus configuration for operands A and B. Using structural hardware generation loops, the accelerator dynamically unbundles and fragments the streaming channels into independent, isolated data tracks for four side-by-side processing lanes simultaneously.</p>
+                
+                <h3>Elastic Lane Sourcing & Structural Backpressure</h3>
+                <p>To safely isolate data ingestion from execution logic, the architecture implements an array of eight parallel synchronous ring-buffer FIFOs alongside a rigid <strong>Valid/Ready Handshake Protocol</strong>.</p>
                 <ul>
-                    <li><strong>Optimized State Logic:</strong> Utilized <i>n</i>+1 bit addressing for read/write pointers. This allows the hardware to calculate "Full" and "Empty" states purely through bitwise comparison, eliminating the need for slow, area-heavy resource counters.</li>
-                    <li><strong>Synchronized Dispatch:</strong> Operands A and B stream asynchronously but are perfectly aligned by the top-level controller before being dispatched into the MAC datapath.</li>
+                    <li><strong>Dynamic Flow Throttling:</strong> Built centralized reduction logic (<code>!(|lane_fifo_full)</code>) that monitors buffer capacities. If any single lane queue runs full, the core pulls down its <code>r_ready</code> handshake line instantly, preventing upstream write overflow.</li>
+                    <li><strong>Pipeline Bubble Injection:</strong> If an input buffer runs dry or the system stalls, the control matrix automatically injects execution bubbles—dropping clock enable signals to lock internal multiplier and accumulator registers securely in time until stable streams recover.</li>
                 </ul>
                 
-                <h3>2-Stage Saturated MAC Engine</h3>
-                <p>The core computational unit, stripped down for maximum frequency scaling.</p>
+                <h3>3-Cycle Pipelined Math Core</h3>
+                <p>The core computational datapath decouples deep combinatorial multiplier paths from the feedback accumulation loop across flip-flop boundaries to optimize critical paths and maximize clock frequencies (F<sub>max</sub>).</p>
                 <ul>
-                    <li><strong>Pipeline Segregation:</strong> Divided the math into two distinct stages (Cycle 1: Multiplier Array, Cycle 2: Accumulator) to shorten the critical path and boost the maximum achievable clock frequency (F<sub>max</sub>).</li>
-                    <li><strong>Hardware-Level Clipping:</strong> Integrated custom saturation logic. Instead of rolling over, values that exceed the 32-bit signed limit are clamped to <code>MAX_POS</code> or <code>MAX_NEG</code>, ensuring mathematically stable output streams.</li>
+                    <li><strong>Multi-Precision Execution:</strong> Features an optimized INT8 multiplier stage ($8\text{-bit} \times 8\text{-bit} \rightarrow 16\text{-bit}$ product) which is cleanly sign-extended to 32 bits before reaching the accumulation register.</li>
+                    <li><strong>Anti-Wrapping Saturation Blocks:</strong> Integrated custom hardware clamping circuitry. If a value breaches the 32-bit signed boundaries, the adder immediately snaps and locks the signal to its maximum positive (<code>32'h7FFFFFFF</code>) or negative (<code>32'h80000000</code>) boundary, maintaining mathematical correctness.</li>
                 </ul>
 
-                <h3>Autonomous Pipeline Control</h3>
-                <p>The top-level wrapper acts as a micro-sequencer. It autonomously drives the datapath enable signals based purely on buffer occupancy. A synchronous shift-register tracks data through the pipeline, asserting the output <code>valid</code> flag exactly aligned with the 2-cycle algorithmic latency.</p>
+                <h3>Control-Path Synchronous Realignment</h3>
+                <p>The top-level controller utilizes a synchronous 3-stage shift-register validation pipeline. By tracking the exact operational movement of data from the initial FIFO pop down to the final accumulation step, the core drives its downstream <code>v_out</code> validation flag precisely in sync with the 3-cycle architectural retirement timeline.</p>
             </div>
 
             <div class="content-block">
-                <h2>Testbench Verification</h2>
-                <p>Developed a rigorous simulation environment to prove the logic. The test suite heavily stressed the saturation boundaries, intentionally flooding the accumulator with edge-case limits (e.g., <code>0x7FFFFFFF + 0x7FFFFFFF</code>) to verify that the clamping mechanisms triggered perfectly without stalling the pipeline throughput.</p>
+                <h2>UVM-Inspired Co-Simulation Verification</h2>
+                <p>To establish full sign-off without commercial EDA licensing overhead, I constructed an automated, object-oriented <strong>C++ Co-Simulation Framework using Verilator</strong>. The testbench instantiates a high-level mathematical reference model that runs in parallel with the compiled SystemVerilog hardware.</p>
+                <p>To handle the physical 3-cycle pipeline latency of the RTL, I developed a <strong>temporal software delay line queue</strong> (<code>std::queue</code>) within C++. This queue delays the software's expectations to perfectly time-align with the physical retirement of the wide 128-bit hardware output bus, executing randomized regressions to confirm 100% bit-accurate specification compliance across all lanes simultaneously.</p>
             </div>
 
             <div class="content-block highlight-block">
                 <h2>Performance Metrics</h2>
                 <div class="results-grid">
                     <div class="result-item">
-                        <h3>1 Op/Cycle</h3>
-                        <p>Sustained Throughput</p>
+                        <h3>4 Ops/Cycle</h3>
+                        <p>SIMD Vector Throughput</p>
                     </div>
                     <div class="result-item">
-                        <h3>Zero</h3>
-                        <p>CPU Overhead</p>
+                        <h3>3-Cycle</h3>
+                        <p>Pipelined Retirement Latency</p>
                     </div>
                     <div class="result-item">
                         <h3>100%</h3>
-                        <p>Overflow Immune</p>
+                        <p>Bit-Accurate Saturation Guarded</p>
                     </div>
                 </div>
             </div>
@@ -115,20 +120,20 @@
             <div class="content-block">
                 <h2>Roadmap & Evolution</h2>
                  <ul>
-                    <li><strong>AMBA AXI4 Integration:</strong> Transitioning the raw FIFO inputs to standard AXI4-Stream interfaces for plug-and-play capability with ARM Cortex cores.</li>
-                    <li><strong>UVM Verification:</strong> Upgrading the standard SystemVerilog testbench to a full Universal Verification Methodology (UVM) environment with constrained random testing.</li>
+                    <li><strong>OpenLane ASIC Synthesis:</strong> Passing the verified core through the Yosys/OpenLane toolchain using the SkyWater 130nm PDK to extract post-layout static timing parameters, Worst Negative Slack (WNS), and true gate-area footprints.</li>
+                    <li><strong>AMBA AXI4-Stream Integration:</strong> Wrapping the existing Valid/Ready vector interfaces into a production-ready AXI4-Stream IP block for drop-in interoperability with embedded processors and crossbars.</li>
                 </ul>
             </div>
 
-           <div class="content-block" style="text-align: center; margin-top: 40px;">
-    <a href="https://github.com/Raghavan-04/Systolic-Tensor-Core"
-       class="nav-btn-center"
-       target="_blank"
-       rel="noopener noreferrer"
-       style="display: inline-block; padding: 15px 30px; border: 1px solid #000; text-decoration: none; color: #000;">
-       View Project on GitHub
-    </a>
-</div>
+            <div class="content-block" style="text-align: center; margin-top: 40px;">
+                <a href="https://github.com/Raghavan-04/Systolic-Tensor-Core"
+                   class="nav-btn-center"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   style="display: inline-block; padding: 15px 30px; border: 1px solid #000; text-decoration: none; color: #000;">
+                    View Project on GitHub
+                </a>
+            </div>
 
             <div class="project-navigation">
                 <a href="project-riscv.html" class="nav-btn">← Previous Project</a>
@@ -138,18 +143,16 @@
             
         </div>
     </section>
-   <!-- Footer -->
+
     <footer>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/raghavan-su-04r" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://github.com/Raghavan-04/" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
-            <p>&copy; 2026 Raghavan. Built with Silicon Precision & RTL Innovation.</p>
-            <p>Updated on 19 May 26</p>
-        </footer>
+        <p>&copy; 2026 Raghavan. Built with Silicon Precision & RTL Innovation.</p>
+        <p>Updated on 25 May 2026</p>
+    </footer>
 
- 
-    
     <script src="script.js"></script>
 </body>
 </html>
