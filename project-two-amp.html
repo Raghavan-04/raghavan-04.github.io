@@ -1,1 +1,241 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Design and Verification of 1-Stage and 2-Stage Operational Amplifiers using gpdk180 technology - Analog IC Design & Verification by Raghavan">
+    <title>1-Stage & 2-Stage Operational Amplifiers - Raghavan</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-page.css">
+      
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBGDVXSWX7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-JBGDVXSWX7');
+    </script>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Raghavan</a></div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="menu-overlay"></div>
+            <ul class="nav-menu">              
+                <li><a href="index.html#work">Projects</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <a href="index.html#work" class="back-link">← Back to Projects</a>
+            <h1>1-Stage & 2-Stage Operational Amplifiers</h1>
+            <p class="project-meta">Analog IC Design • Parameter Optimization • Circuit Verification • 2026</p>
+            <div class="project-tags-hero">
+                <span class="tag">Cadence Virtuoso</span>
+                <span class="tag">Spectre Simulation</span>
+                <span class="tag">gpdk180 (180nm)</span>
+                <span class="tag">Miller Compensation</span>
+                <span class="tag">Pole-Splitting</span>
+                <span class="tag">AC/Transient Analysis</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-content-section">
+        <div class="project-container">
+            
+            <div class="content-block">
+                <h2>Project Overview</h2>
+                <p>This project focuses on the comparative analysis, transistor sizing, and simulation verification of a <strong>Single-Stage Operational Amplifier</strong> and a <strong>Two-Stage Miller-Compensated Operational Amplifier</strong>. Both topologies were designed to meet strict target specifications using custom manual sizing workflows and validated inside <strong>Cadence Virtuoso</strong> using the <strong>Spectre simulation platform</strong> on the <strong>gpdk180 (180nm) technology node</strong>.</p>
+                <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 15px;"><strong>Project Team:</strong> Mithun Hari, Raghavan, Vijhay Valliappan, Thughilan &bull; <strong>Institution:</strong> PSG College of Technology, Coimbatore</p>
+            </div>
+
+            <div class="content-block">
+                <h2>Architectural Block Topology</h2>
+                <p>The system architectures process analog signals through an multi-stage layout configuration. The internal design leverages a high-precision input differential stage, intermediate cascaded gain blocks, optimized level shifters, and an output buffer network to maintain structural signal fidelity.</p>
+                <div class="project-image-wrapper" style="margin: 30px 0; text-align: center;">
+                    <img src="block_diagram.png" alt="Op-Amp Architectural Block Diagram" style="max-width: 85%; height: auto; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 10px; color: #555;">Figure 1: Multistage Op-Amp Architectural Layout showing cascade paths from the differential pair to output buffers.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Comparative Performance Matrix</h2>
+                <p>Dynamic simulation capture across both configurations reveals significant performance differentials and architectural trade-offs:</p>
+                <div style="overflow-x: auto; margin-top: 20px;">
+                    <table style="width:100%; border-collapse: collapse; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #000; font-family: 'Playfair Display', serif;">
+                                <th style="padding: 10px;">Performance Parameter</th>
+                                <th style="padding: 10px; text-align: center;">1-Stage Op-Amp</th>
+                                <th style="padding: 10px; text-align: center;">2-Stage Op-Amp</th>
+                                <th style="padding: 10px;">Analysis & Insights</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">DC Differential Gain (Ad)</td>
+                                <td style="padding: 10px; text-align: center;">40.80 dB</td>
+                                <td style="padding: 10px; text-align: center;">59.85 dB</td>
+                                <td style="padding: 10px;">The 2-stage achieves nearly 20 dB higher gain due to cascaded amplification loops.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">Common Mode Gain (Ac)</td>
+                                <td style="padding: 10px; text-align: center;">-47.30 dB</td>
+                                <td style="padding: 10px; text-align: center;">-36.80 dB</td>
+                                <td style="padding: 10px;">The 1-stage exhibits better raw common-mode signal suppression.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">CMRR</td>
+                                <td style="padding: 10px; text-align: center;">88.10 dB</td>
+                                <td style="padding: 10px; text-align: center;">96.64 dB</td>
+                                <td style="padding: 10px;">The 2-stage achieves superior CMRR due to its massive differential gain advantage.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">Gain Bandwidth (GBW)</td>
+                                <td style="padding: 10px; text-align: center;">4.68 MHz</td>
+                                <td style="padding: 10px; text-align: center;">30.29 MHz</td>
+                                <td style="padding: 10px;">The 2-stage offers an expanded frequency response sweep window.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">Phase Margin (PM)</td>
+                                <td style="padding: 10px; text-align: center;">≈89.5°</td>
+                                <td style="padding: 10px; text-align: center;">47.25°</td>
+                                <td style="padding: 10px;">The 1-stage is unconditionally stable; the 2-stage trades PM for bandwidth extensions.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px; font-weight: bold;">Slew Rate (SR)</td>
+                                <td style="padding: 10px; text-align: center;">5.32 V/µs</td>
+                                <td style="padding: 10px; text-align: center;">42.50 V/µs</td>
+                                <td style="padding: 10px;">The 2-stage handles large-signal transient switches significantly faster.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Single-Stage Op-Amp Design</h2>
+                <p>The single-stage architecture implements a dual-input balanced-output differential amplifier paired with active load current mirrors to maximize common-mode rejection and initial layout open-loop gain.</p>
+                
+                <h3>📐 Sizing & Aspect Ratios</h3>
+                <ul>
+                    <li><strong>Differential Input Pair (M1, M2):</strong> W/L = 7</li>
+                    <li><strong>Active Load Mirrors (M3, M4):</strong> W/L = 15</li>
+                    <li><strong>Tail Current Mirrors (M5, M6):</strong> W/L = 13.67</li>
+                </ul>
+
+                <div class="project-image-wrapper" style="margin: 30px 0; text-align: center;">
+                    <img src="1_stage_schematic.png" alt="1-Stage Op-Amp Schematic Capture" style="max-width: 85%; height: auto; border: 1px solid #ddd;">
+                    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 10px; color: #555;">Figure 2: Schematic capture of the baseline single-stage architecture within Cadence Virtuoso.</p>
+                </div>
+
+                <h3>📈 AC Characterization Waveforms</h3>
+                <div class="project-image-wrapper" style="margin: 20px 0; text-align: center;">
+                    <img src="1_stage_gain_phase.png" alt="1-Stage Gain and Phase Margin" style="max-width: 85%; height: auto; border: 1px solid #ddd; margin-bottom: 15px;">
+                    <br>
+                    <img src="1_stage_differential_gain.png" alt="1-Stage Differential Gain" style="max-width: 48%; height: auto; border: 1px solid #ddd;">
+                    <img src="1_stage_common_gain.png" alt="1-Stage Common Mode Gain" style="max-width: 48%; height: auto; border: 1px solid #ddd;">
+                    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 10px; color: #555;">Figure 3: Unconditionally stable frequency sweeps for Phase, Differential, and Common-Mode parameters.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Two-Stage Op-Amp Design</h2>
+                <p>The two-stage configuration splits voltage amplification into an initial input differential stage followed by a common-source output stage. <strong>Miller Compensation (Cc)</strong> and <strong>Pole-Splitting</strong> methodologies isolate dominant and non-dominant poles to maintain strict stability parameters under closed feedback loops.</p>
+                
+                <h3>📐 Sizing & Aspect Ratios</h3>
+                <ul>
+                    <li><strong>Transistor Sizing Ratios:</strong> M1, M2 = 6 &nbsp;|&nbsp; M3, M4 = 8 &nbsp;|&nbsp; M5 = 124.56 &nbsp;|&nbsp; M6 = 31.14 &nbsp;|&nbsp; M7, M8 = 4</li>
+                </ul>
+
+                <div class="project-image-wrapper" style="margin: 30px 0; text-align: center;">
+                    <img src="2_stage_schematic.png" alt="2-Stage Op-Amp Schematic Capture" style="max-width: 85%; height: auto; border: 1px solid #ddd;">
+                    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 10px; color: #555;">Figure 4: Expanded Two-Stage layout configuration with embedded Miller compensation networks.</p>
+                </div>
+
+                <h3>📈 AC Characterization Waveforms</h3>
+                <div class="project-image-wrapper" style="margin: 20px 0; text-align: center;">
+                    <img src="2_stage_gain_phase.png" alt="2-Stage Gain and Phase Margin" style="max-width: 85%; height: auto; border: 1px solid #ddd; margin-bottom: 15px;">
+                    <br>
+                    <img src="2_stage_differential_gain.png" alt="2-Stage Differential Gain" style="max-width: 48%; height: auto; border: 1px solid #ddd;">
+                    <img src="2_stage_common_gain.png" alt="2-Stage Common Mode Gain" style="max-width: 48%; height: auto; border: 1px solid #ddd;">
+                    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 10px; color: #555;">Figure 5: Closed-loop frequency plots demonstrating expanded Gain Bandwidth (GBW) and bounded phase margin tracking.</p>
+                </div>
+            </div>
+
+            <div class="content-block highlight-block">
+                <h2>Key Engineering Takeaways</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h3>40.8 dB</h3>
+                        <p>1-Stage Open-Loop Gain</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>59.85 dB</h3>
+                        <p>2-Stage Cascaded Gain</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>30.29 MHz</h3>
+                        <p>Scaled Gain Bandwidth (GBW)</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>8x Accel</h3>
+                        <p>Transient Slew Rate Bootstrapping</p>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; font-size: 0.95em; line-height: 1.6;">
+                    <p><strong>The Gain-Stability Dilemma:</strong> The single-stage topology functions effectively as a single-pole system, yielding near-perfect stability ($PM \approx 89.5^\circ$) but bounding open-loop gain limits. Reconfiguring into a 2-stage architecture successfully boosts the open-loop gain by roughly $20\text{ dB}$ and scales the bandwidth execution boundaries while holding stable phase tracking above design constraints ($PM = 47.25^\circ$).</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h2>Design Infrastructure & Tooling</h2>
+                <ul>
+                    <li><strong>Cadence Virtuoso:</strong> Transistor schematic capture, sizing matrix deployment, and multi-node parameter variation.</li>
+                    <li><strong>Spectre Simulation Platform:</strong> Evaluation engine for AC frequency sweeps, Transient analysis, and Common-Mode performance matrices.</li>
+                </ul>
+                <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; margin-top: 20px; color: #555;"><strong>Note on Architecture Repository:</strong> Due to a routine server sweep on laboratory local workstations, the active schematic database directory instances were flushed. This portfolio block handles data storage validation, hosting the structural backups, design slides (<code>FINAL Draft.pdf</code>), and performance validation graphs generated across the design lifecycle.</p>
+            </div>
+
+            <div class="content-block" style="text-align: center; margin-top: 40px;">
+                <a href="https://github.com/Raghavan-04/OpAmp_Design_180nm" class="nav-btn-center" style="display: inline-block; padding: 15px 30px; border: 1px solid #000; text-decoration: none; color: #000;">View Project on GitHub</a>
+            </div>
+
+            <div class="project-navigation">
+                <a href="project-trading-system.html" class="nav-btn">← Previous Project</a>
+                <a href="index.html#work" class="nav-btn-center">All Projects</a>
+                <a href="project-HA.html" class="nav-btn">Next Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/raghavan-su-04r" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/Raghavan-04/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <p>&copy; 2026 Raghavan. Architected with Silicon Precision & Centralized Bus Innovation.</p>
+        <p>Updated on 27 May 26</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
