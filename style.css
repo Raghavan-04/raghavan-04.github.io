@@ -786,3 +786,53 @@ html {
         display: none !important;
     }
 }
+
+/* Important: This ensures the icons center relative to the nav bar */
+nav .container {
+    position: relative;
+}
+
+/* Header Social Icons (Desktop: Centered) */
+.nav-socials {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    
+    /* Centering Magic */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-socials a {
+    color: inherit;
+    font-size: 1.4rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}
+
+/* Hover effects */
+.nav-socials a:hover {
+    transform: translateY(-2px);
+}
+
+.nav-socials a[aria-label="LinkedIn"]:hover {
+    color: #0077b5;
+}
+
+.nav-socials a[aria-label="GitHub"]:hover {
+    color: #6e5494;
+}
+
+/* Mobile Adjustments (Keeps it next to the hamburger menu) */
+@media (max-width: 768px) {
+    .nav-socials {
+        /* Reset the desktop centering */
+        position: static;
+        transform: none;
+        
+        /* Push to the right edge */
+        margin-left: auto;
+        margin-right: 20px; 
+    }
+}
