@@ -786,3 +786,33 @@ html {
         display: none !important;
     }
 }
+
+/* Hero Social Icons */
+.hero-socials {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px; /* Creates space between the icons and the button */
+    /* Uncomment the next line if you want the icons centered instead of left-aligned */
+    /* justify-content: center; */ 
+}
+
+.hero-socials a {
+    color: inherit; /* This will match your existing text color */
+    font-size: 1.8rem; /* Large enough to be clicked easily */
+    transition: transform 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}
+
+/* Hover effects */
+.hero-socials a:hover {
+    transform: translateY(-3px); /* Subtle lift */
+}
+
+/* Optional: Add brand colors on hover for extra flair */
+.hero-socials a[aria-label="LinkedIn"]:hover {
+    color: #0077b5;
+}
+
+.hero-socials a[aria-label="GitHub"]:hover {
+    color: #6e5494;
+}
