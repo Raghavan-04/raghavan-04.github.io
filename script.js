@@ -324,3 +324,25 @@ document.querySelectorAll('img').forEach(img => {
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
 });
+
+// Scroll to Top Functionality
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+if (scrollTopBtn) {
+    // Show button when scrolled down 300px
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollTopBtn.classList.add('show');
+        } else {
+            scrollTopBtn.classList.remove('show');
+        }
+    });
+
+    // Smooth scroll back to top on click
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
