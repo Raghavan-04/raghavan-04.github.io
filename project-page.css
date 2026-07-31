@@ -396,7 +396,6 @@
 .result-item h3 {
     font-size: clamp(1.2rem, 2vw, 1.8rem); /* Fluidly resizes text based on viewport width */
 }
-
 .scroll-top-btn {
     position: fixed;
     bottom: 35px;
@@ -413,6 +412,8 @@
     justify-content: center;
     font-size: 1.2rem;
     z-index: 9999;
+    
+    /* Hidden initially */
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -431,4 +432,14 @@
     color: var(--primary);
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(201, 169, 97, 0.4);
+}
+
+@media (max-width: 640px) {
+    .scroll-top-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+    }
 }
